@@ -1,0 +1,9 @@
+import HeaderMenu from "./header-menu";
+
+export default function Header() {
+  return (
+    <header className="bg-blue-gradient from-blue-bg-1 via-blue-bg-2 to-blue-bg-3 flex h-20 w-screen items-center justify-between bg-gradient-to-t px-2 py-4">
+      <HeaderMenu />
+    </header>
+  );
+}
