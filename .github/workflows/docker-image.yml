@@ -27,7 +27,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           BRANCH_NAME=$(echo "${GITHUB_REF##*/}" | tr '[:upper:]' '[:lower:]')
-          REPO_NAME=${{ github.repository }}  # Nome do repositório
+          REPO_NAME=${{ github.event.repository.name }}  
           IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/$REPO_NAME:${BRANCH_NAME}
           docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
