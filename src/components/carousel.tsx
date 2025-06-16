@@ -3,17 +3,39 @@
 import cities from "@/utils/cities";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperClass } from "swiper/types";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-export default function Carousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function Carousel({
+  initialCityName,
+}: {
+  initialCityName?: string;
+}) {
+  const initialIndex = initialCityName
+    ? cities.findIndex(
+        (c) => c.name.toLowerCase() === initialCityName.toLowerCase(),
+      )
+    : 0;
+
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const swiperRef = useRef<SwiperClass | null>(null);
   const slidesCount = cities.length;
+
+  useEffect(() => {
+    if (
+      swiperRef.current &&
+      typeof initialIndex === "number" &&
+      initialIndex >= 0
+    ) {
+      swiperRef.current.slideToLoop(initialIndex, 0);
+    }
+  }, [initialIndex]);
 
   const getSlideClass = (index: number) => {
     if (index === activeIndex) return "scale-105 opacity-100";
@@ -47,6 +69,7 @@ export default function Carousel() {
 
         <Swiper
           modules={[Navigation]}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
           navigation={{
             prevEl: ".custom-prev",
             nextEl: ".custom-next",
@@ -92,7 +115,11 @@ export default function Carousel() {
                 className={`transition-all duration-300 ease-in-out ${getSlideClass(index)}`}
               >
                 {index === activeIndex ? (
-                  <Link href={city.url}>{content}</Link>
+                  <Link
+                    href={`/city/${city.name.toLowerCase().replaceAll(" ", "-")}?id=${city.id}`}
+                  >
+                    {content}
+                  </Link>
                 ) : (
                   <div aria-hidden>{content}</div>
                 )}
