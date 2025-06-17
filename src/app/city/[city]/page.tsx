@@ -1,4 +1,5 @@
 import Carousel from "@/components/carousel";
+import { FeaturesScroll } from "@/components/feature-scroll";
 import cities from "@/utils/cities";
 import { CityCards } from "./components/cards";
 
@@ -27,6 +28,8 @@ export default async function Page(props: {
 
   return (
     <div>
+      <FeaturesScroll />
+
       <Carousel initialCityName={params.city.replaceAll("-", " ")} />
 
       <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-6 px-4">
