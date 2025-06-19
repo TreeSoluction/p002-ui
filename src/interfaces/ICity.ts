@@ -11,3 +11,7 @@ export interface ICityCategory {
   name: string;
   image: string;
 }
+
+export interface IStateCardProps {
+  name: string;
+}

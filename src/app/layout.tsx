@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import Header from "@/components/header";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -14,10 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className="overflow-x-hidden antialiased">
+      <body className="flex flex-col min-h-screen overflow-x-hidden antialiased h-screen w-full">
         <Header />
 
-        {children}
+        <main className="flex-1">{children}</main>
+
+        <Footer />
       </body>
     </html>
   );

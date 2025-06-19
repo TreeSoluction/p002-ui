@@ -1,4 +1,4 @@
-import Carousel from "@/components/carousel";
+import { Carousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import cities from "@/utils/cities";
 import { CityCards } from "./components/cards";
