@@ -1,25 +1,21 @@
 import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { QueryProvider } from "@/providers/query-client-provider";
+import { fetchTours } from "@/services/tours";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import Tours from "./components/tours";
 
-export default function Page() {
-  const states = [
-    "Acre",
-    "Alagoas",
-    "Amapá",
-    "Amazonas",
-    "Bahia",
-    "Ceará",
-    "Distrito Federal",
-    "Espírito Santo",
-    "Paraíba",
-    "Paraná",
-    "Pernambuco",
-    "Piauí",
-  ];
+export default async function Page() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["users"],
+    queryFn: fetchTours,
+  });
 
   return (
-    <>
+    <QueryProvider dehydratedState={dehydrate(queryClient)}>
       <FeaturesScroll />
 
       <div className="flex flex-col items-center justify-center gap-4 mt-6 px-4">
@@ -35,17 +31,7 @@ export default function Page() {
 
       <CityCarousel />
 
-      <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mt-6">
-        {states.map((state) => (
-          <div
-            key={state}
-            className="bg-blue-900 text-white rounded-lg shadow text-center flex items-center justify-center p-2 cursor-pointer hover:brightness-110"
-            style={{ height: "100px", width: "100%" }}
-          >
-            <span className="text-sm font-medium">{state}</span>
-          </div>
-        ))}
-      </div>
-    </>
+      <Tours />
+    </QueryProvider>
   );
 }

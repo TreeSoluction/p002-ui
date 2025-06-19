@@ -10,10 +10,15 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.80.10",
+    "@tanstack/react-query-devtools": "^5.80.10",
+    "@tanstack/react-query-persist-client": "^5.80.10",
+    "axios": "^1.10.0",
     "lucide-react": "^0.514.0",
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
     "swiper": "^11.2.8",
     "tailwind-scrollbar": "^4.0.2"
   },

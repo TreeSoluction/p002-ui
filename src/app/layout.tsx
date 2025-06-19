@@ -1,5 +1,7 @@
 import { Footer } from "@/components/footer";
 import Header from "@/components/header";
+import { QueryProvider } from "@/providers/query-client-provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -16,11 +18,16 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className="flex flex-col min-h-screen overflow-x-hidden antialiased h-screen w-full">
-        <Header />
+        <QueryProvider>
+          <Header />
 
-        <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </main>
 
-        <Footer />
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );

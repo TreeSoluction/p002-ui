@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperClass } from "swiper/types";
+import type { NavigationOptions, Swiper as SwiperClass } from "swiper/types";
 
 import { IStateCardProps } from "@/interfaces/ICity";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -135,12 +135,19 @@ export function CityCarousel() {
   const swiperRef = useRef<SwiperClass | null>(null);
 
   useEffect(() => {
-    if (swiperRef.current && prevRef.current && nextRef.current) {
-      swiperRef.current.params.navigation = {
-        prevEl: prevRef.current,
-        nextEl: nextRef.current,
-      };
+    if (
+      swiperRef.current &&
+      prevRef.current &&
+      nextRef.current &&
+      swiperRef.current.params.navigation &&
+      typeof swiperRef.current.params.navigation === "object"
+    ) {
+      (swiperRef.current.params.navigation as NavigationOptions).prevEl =
+        prevRef.current;
+      (swiperRef.current.params.navigation as NavigationOptions).nextEl =
+        nextRef.current;
 
+      swiperRef.current.navigation.destroy();
       swiperRef.current.navigation.init();
       swiperRef.current.navigation.update();
     }
@@ -153,6 +160,7 @@ export function CityCarousel() {
       <Swiper
         modules={[Navigation]}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
+        navigation={false}
         spaceBetween={10}
         slidesPerView={3}
         breakpoints={{
@@ -172,7 +180,6 @@ export function CityCarousel() {
         ))}
       </Swiper>
 
-      {/* Botões fora do Swiper */}
       <button
         ref={prevRef}
         className="cursor-pointer absolute top-12 left-0 text-gray-500 hover:text-gray-700 z-10 p-2"
