@@ -1,4 +1,4 @@
-export interface ITransportes {
+export interface ITransport {
   id: number;
   nome: string;
   local: string;

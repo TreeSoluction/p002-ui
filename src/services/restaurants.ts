@@ -1,12 +1,12 @@
 import { IResponse } from "@/interfaces/IResponse";
-import { ITransport } from "@/interfaces/ITransport";
+import { IRestaurant } from "@/interfaces/IRestaurant";
 import { api } from "./api";
 
-export async function getAllTransporters(
+export async function getAllRestaurants(
   size: number = 10,
   page: number = 0,
-): Promise<IResponse<ITransport[]>> {
-  const response = await api.get(`/transportadoras`, {
+): Promise<IResponse<IRestaurant[]>> {
+  const response = await api.get(`/restaurantes`, {
     params: {
       size,
       page,

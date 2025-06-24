@@ -1,40 +1,38 @@
 "use client";
 
 import { IResponse } from "@/interfaces/IResponse";
-import { ITransport } from "@/interfaces/ITransport";
-import { getAllTransporters } from "@/services/transporters";
+import { IRestaurant } from "@/interfaces/IRestaurant";
+import { getAllRestaurants } from "@/services/restaurants";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { TransportCard } from "./card";
+import { RestaurantCard } from "./card";
 
-interface TransportProps {
-  initialData: IResponse<ITransport[]>;
+interface RestaurantProps {
+  initialData: IResponse<IRestaurant[]>;
 }
 
-export default function Transport({ initialData }: TransportProps) {
+export default function Restaurant({ initialData }: RestaurantProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
-  const { data, isLoading } = useQuery<IResponse<ITransport[]>>({
-    queryKey: ["transportes", page],
-    queryFn: () => getAllTransporters(size, page),
+  const { data, isLoading } = useQuery<IResponse<IRestaurant[]>>({
+    queryKey: ["restaurantes", page],
+    queryFn: () => getAllRestaurants(size, page),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });
 
-  const transportData = data ?? { data: [], totalPages: 0, page: 0, size };
+  const restaurantData = data ?? { data: [], totalPages: 0, page: 0, size };
 
   return (
     <div className="py-8 px-4">
       {isLoading ? (
-        <p className="text-center text-gray-600">
-          Carregando transportadoras...
-        </p>
-      ) : transportData.data.length > 0 ? (
+        <p className="text-center text-gray-600">Carregando restaurantes...</p>
+      ) : restaurantData.data.length > 0 ? (
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
-            {transportData.data.map((item) => (
-              <TransportCard key={item.id} data={item} />
+            {restaurantData.data.map((item) => (
+              <RestaurantCard key={item.id} data={item} />
             ))}
           </ul>
 
@@ -50,8 +48,8 @@ export default function Transport({ initialData }: TransportProps) {
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={
-                page + 1 >= (transportData.totalPages ?? 0) ||
-                (transportData.totalPages ?? 0) === 0
+                page + 1 >= (restaurantData.totalPages ?? 0) ||
+                (restaurantData.totalPages ?? 0) === 0
               }
               className="px-4 py-2 bg-blue-800 text-white rounded disabled:opacity-50"
             >

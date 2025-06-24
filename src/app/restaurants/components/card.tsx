@@ -1,13 +1,13 @@
-import { ITransport } from "@/interfaces/ITransport";
+import { IRestaurant } from "@/interfaces/IRestaurant";
 import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 
-interface ITransportCardProps {
-  data: ITransport;
+interface IRestaurantCardProps {
+  data: IRestaurant;
 }
 
-export function TransportCard({ data }: ITransportCardProps) {
+export function RestaurantCard({ data }: IRestaurantCardProps) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-xl p-4 gap-4 w-full max-w-4xl shadow-sm">
       <div className="w-24 h-24 min-w-[96px] relative rounded-xl overflow-hidden bg-white">
