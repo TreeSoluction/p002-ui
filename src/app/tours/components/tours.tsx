@@ -6,6 +6,7 @@ import { IResponse } from "@/interfaces/IResponse";
 import { ITour } from "@/interfaces/ITours";
 import { useQuery } from "@tanstack/react-query";
 import { Phone, Target } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { States } from "./states";
@@ -74,7 +75,7 @@ export default function Tours() {
                         const isMobile = /^(\d{2})9\d{8}$/.test(cleaned);
 
                         return isMobile ? (
-                          <a
+                          <Link
                             key={i}
                             href={`https://wa.me/55${cleaned}`}
                             target="_blank"
@@ -83,7 +84,7 @@ export default function Tours() {
                           >
                             <FaWhatsapp size={20} />
                             {phone}
-                          </a>
+                          </Link>
                         ) : (
                           <div
                             key={i}

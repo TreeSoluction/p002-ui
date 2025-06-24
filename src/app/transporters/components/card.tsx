@@ -32,10 +32,10 @@ export function TransportCard({ data }: ITransportCardProps) {
             href={`https://wa.me/55${phone.replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 bg-white rounded-lg px-2 py-1 shadow border border-gray-300 hover:bg-gray-50 transition"
+            className="flex items-center gap-2 bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded text-sm"
           >
-            <FaWhatsapp className="text-green-600" />
-            <span className="text-xs text-[#0E2F4B] font-medium">{phone}</span>
+            <FaWhatsapp size={20} />
+            {phone}
           </Link>
         ))}
       </div>
