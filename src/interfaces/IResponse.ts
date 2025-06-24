@@ -1,5 +1,5 @@
 export interface IResponse<T> {
-  data: T[];
+  data: T;
   page?: number;
   size?: number;
   totalPages?: number;

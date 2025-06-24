@@ -1,6 +1,5 @@
 "use client";
 
-import cities from "@/utils/cities";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -8,31 +7,38 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { NavigationOptions, Swiper as SwiperClass } from "swiper/types";
 
-import { IStateCardProps } from "@/interfaces/ICity";
+import { ICity, IStateCardProps } from "@/interfaces/ICity";
+import { getCities } from "@/services/cities";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 
 export function Carousel({ initialCityName }: { initialCityName?: string }) {
-  const initialIndex = initialCityName
-    ? cities.findIndex(
-        (c) => c.name.toLowerCase() === initialCityName.toLowerCase(),
-      )
-    : 0;
-
-  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const [cities, setCities] = useState<ICity[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
   const slidesCount = cities.length;
 
   useEffect(() => {
-    if (
-      swiperRef.current &&
-      typeof initialIndex === "number" &&
-      initialIndex >= 0
-    ) {
-      swiperRef.current.slideToLoop(initialIndex, 0);
-    }
-  }, [initialIndex]);
+    (async () => {
+      const response = await getCities();
+      if (!response.data) {
+        throw new Error("Failed to fetch cities");
+      }
+      const fetchedCities = response.data;
+      setCities(fetchedCities);
+
+      if (initialCityName) {
+        const index = fetchedCities.findIndex(
+          (c) => c.nome.toLowerCase() === initialCityName.toLowerCase(),
+        );
+        if (index >= 0) {
+          setActiveIndex(index);
+          swiperRef.current?.slideToLoop(index, 0);
+        }
+      }
+    })();
+  }, [initialCityName]);
 
   const getSlideClass = (index: number) => {
     if (index === activeIndex) return "scale-105 opacity-100";
@@ -89,8 +95,8 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
                 <div className="relative w-full h-40 rounded-3xl overflow-hidden shadow-lg bg-white p-2">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src={city.image}
-                      alt={city.name}
+                      src={city.imagem}
+                      alt={city.nome}
                       fill
                       className="object-cover"
                     />
@@ -101,19 +107,19 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
                     index === activeIndex ? "text-black" : "text-gray-400"
                   }`}
                 >
-                  {city.name}
+                  {city.nome}
                 </span>
               </div>
             );
 
             return (
               <SwiperSlide
-                key={city.name}
+                key={city.nome}
                 className={`transition-all duration-300 ease-in-out ${getSlideClass(index)}`}
               >
                 {index === activeIndex ? (
                   <Link
-                    href={`/city/${city.name.toLowerCase().replaceAll(" ", "-")}?id=${city.id}`}
+                    href={`/city/${city.nome.toLowerCase().replaceAll(" ", "-")}?id=${city.id}`}
                   >
                     {content}
                   </Link>
@@ -130,6 +136,18 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
 }
 
 export function CityCarousel() {
+  const [cities, setCities] = useState<ICity[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await getCities();
+      if (!response.data) {
+        throw new Error("Failed to fetch cities");
+      }
+      setCities(response.data);
+    })();
+  }, []);
+
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
@@ -171,9 +189,9 @@ export function CityCarousel() {
       >
         {cities.map((city) => (
           <SwiperSlide key={city.id}>
-            <Link href={city.url ?? "#"}>
+            <Link href={`/cities/${city.nome}`}>
               <span className="block text-sm text-gray-800 font-medium hover:text-gray-600 cursor-pointer text-center">
-                {city.name}
+                {city.nome}
               </span>
             </Link>
           </SwiperSlide>

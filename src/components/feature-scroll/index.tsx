@@ -15,6 +15,7 @@ const features = [
   { icon: "/icon/restaurants.svg", label: "Restaurantes", url: "/restaurants" },
   { icon: "/icon/kiosk.svg", label: "Quiosques", url: "/kiosks" },
   { icon: "/icon/parking-2.svg", label: "Estacionamentos", url: "/parkings" },
+  { icon: "/icon/knitting.svg", label: "Malharias", url: "/knitwear" },
 ];
 
 export function FeaturesScroll() {

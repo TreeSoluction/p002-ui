@@ -1,9 +1,7 @@
 export interface ICity {
   id: string;
-  name: string;
-  image: string;
-  url: string;
-  category: ICityCategory[];
+  nome: string;
+  imagem: string;
 }
 
 export interface ICityCategory {

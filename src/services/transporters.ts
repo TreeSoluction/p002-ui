@@ -1,12 +1,12 @@
 import { IResponse } from "@/interfaces/IResponse";
-import { ITour } from "@/interfaces/ITours";
+import { ITransportes } from "@/interfaces/ITransportes";
 import { api } from "./api";
 
-export async function fetchExcursionsByUF(
+export async function getAllTransporters(
   uf: string,
   size: number = 10,
   page: number = 0,
-): Promise<IResponse<ITour>> {
+): Promise<IResponse<ITransportes>> {
   const response = await api.get(`/excursoes`, {
     params: {
       uf,
