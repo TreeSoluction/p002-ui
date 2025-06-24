@@ -1,8 +1,12 @@
 import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { getAllTransporters } from "@/services/transporters";
 import Image from "next/image";
+import { TransportCard } from "./components/card";
 
 export default async function Page() {
+  const transporters = await getAllTransporters();
+
   return (
     <>
       <FeaturesScroll />
@@ -19,6 +23,12 @@ export default async function Page() {
       </div>
 
       <CityCarousel />
+
+      <div className="flex flex-col items-center justify-center gap-4 mt-6 px-4">
+        {transporters.data.map((transporter) => (
+          <TransportCard key={transporter.id} data={transporter} />
+        ))}
+      </div>
     </>
   );
 }

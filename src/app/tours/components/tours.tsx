@@ -15,7 +15,7 @@ export default function Tours() {
   const [page, setPage] = useState(0);
   const size = 10;
 
-  const { data, isLoading } = useQuery<IResponse<ITour>>({
+  const { data, isLoading } = useQuery<IResponse<ITour[]>>({
     queryKey: ["excursions", selectedUF, page],
     queryFn: () => fetchExcursionsByUF(selectedUF!, size, page),
     enabled: !!selectedUF,

@@ -3,17 +3,20 @@ import { ITransportes } from "@/interfaces/ITransportes";
 import { api } from "./api";
 
 export async function getAllTransporters(
-  uf: string,
   size: number = 10,
   page: number = 0,
-): Promise<IResponse<ITransportes>> {
-  const response = await api.get(`/excursoes`, {
+): Promise<IResponse<ITransportes[]>> {
+  const response = await api.get(`/transportadoras`, {
     params: {
-      uf,
       size,
       page,
     },
   });
 
-  return response.data;
+  return {
+    data: response.data.data,
+    totalPages: response.data.totalPages,
+    size: response.data.size,
+    page: response.data.page,
+  };
 }

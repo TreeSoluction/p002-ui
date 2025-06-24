@@ -6,7 +6,7 @@ export async function fetchExcursionsByUF(
   uf: string,
   size: number = 10,
   page: number = 0,
-): Promise<IResponse<ITour>> {
+): Promise<IResponse<ITour[]>> {
   const response = await api.get(`/excursoes`, {
     params: {
       uf,
