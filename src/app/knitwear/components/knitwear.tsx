@@ -1,37 +1,37 @@
 "use client";
 
 import { Card } from "@/components/card";
-import { IKiosk } from "@/interfaces/IKiosk";
+import { IKnitwear } from "@/interfaces/IKnitwear";
 import { IResponse } from "@/interfaces/IResponse";
-import { getAllKiosks } from "@/services/kiosk";
+import { getAllKnitwears } from "@/services/knitwear";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-interface KioskProps {
-  initialData: IResponse<IKiosk[]>;
+interface KnitwearProps {
+  initialData: IResponse<IKnitwear[]>;
 }
 
-export default function Kiosk({ initialData }: KioskProps) {
+export default function Knitwear({ initialData }: KnitwearProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
-  const { data, isLoading } = useQuery<IResponse<IKiosk[]>>({
-    queryKey: ["kiosk", page],
-    queryFn: () => getAllKiosks(size, page),
+  const { data, isLoading } = useQuery<IResponse<IKnitwear[]>>({
+    queryKey: ["knitwear", page],
+    queryFn: () => getAllKnitwears(size, page),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });
 
-  const kioskData = data ?? { data: [], totalPages: 0, page: 0, size };
+  const knitwearData = data ?? { data: [], totalPages: 0, page: 0, size };
 
   return (
     <div className="py-8 px-4">
       {isLoading ? (
         <p className="text-center text-gray-600">Carregando freteiros...</p>
-      ) : kioskData.data.length > 0 ? (
+      ) : knitwearData.data.length > 0 ? (
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
-            {kioskData.data.map((item) => (
+            {knitwearData.data.map((item) => (
               <Card key={item.id} data={item} />
             ))}
           </ul>
@@ -48,8 +48,8 @@ export default function Kiosk({ initialData }: KioskProps) {
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={
-                page + 1 >= (kioskData.totalPages ?? 0) ||
-                (kioskData.totalPages ?? 0) === 0
+                page + 1 >= (knitwearData.totalPages ?? 0) ||
+                (knitwearData.totalPages ?? 0) === 0
               }
               className="px-4 py-2 bg-blue-800 text-white rounded disabled:opacity-50"
             >
@@ -59,7 +59,7 @@ export default function Kiosk({ initialData }: KioskProps) {
         </>
       ) : (
         <div className="text-center text-gray-600 mt-8">
-          <p className="text-lg">😕 Nenhuma quiosque encontrado.</p>
+          <p className="text-lg">😕 Nenhuma malharia encontrado.</p>
           <p className="text-sm mt-1">Tente novamente mais tarde!</p>
         </div>
       )}

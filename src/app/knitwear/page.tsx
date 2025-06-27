@@ -1,8 +1,12 @@
 import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { getAllKnitwears } from "@/services/knitwear";
 import Image from "next/image";
+import Knitwear from "./components/knitwear";
 
 export default async function Page() {
+  const knitwear = await getAllKnitwears();
+
   return (
     <>
       <FeaturesScroll />
@@ -19,6 +23,8 @@ export default async function Page() {
       </div>
 
       <CityCarousel />
+
+      <Knitwear initialData={knitwear} />
     </>
   );
 }
