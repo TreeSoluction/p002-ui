@@ -1,6 +1,6 @@
+import Link from "@/components/link";
 import { FeatureCardProps } from "@/interfaces/IFeatureCard";
 import Image from "next/image";
-import Link from "next/link";
 
 export function FeatureCard({
   icon,

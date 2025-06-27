@@ -1,6 +1,6 @@
+import Link from "@/components/link";
 import { ISegment } from "@/interfaces/ISegment";
 import Image from "next/image";
-import Link from "next/link";
 
 export function CityCards({
   segment,

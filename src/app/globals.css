@@ -68,3 +68,19 @@
 
   --color-green-bg: #014540;
 }
+
+*:root {
+  #nprogress .bar {
+    @apply h-1 bg-green-600;
+  }
+
+  #nprogress .peg {
+    box-shadow:
+      0 0 10px theme("colors.green-600"),
+      0 0 5px theme("colors.green-600");
+  }
+
+  #nprogress .spinner {
+    @apply hidden;
+  }
+}

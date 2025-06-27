@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "@/components/link";
 import { MenuIcon, X } from "lucide-react";
-import Link from "next/link";
+
 import { useState } from "react";
 
 export default function HeaderMenu() {

@@ -1,6 +1,7 @@
+import Link from "@/components/link";
 import { IRestaurant } from "@/interfaces/IRestaurant";
 import Image from "next/image";
-import Link from "next/link";
+
 import { FaWhatsapp } from "react-icons/fa";
 
 interface IRestaurantCardProps {

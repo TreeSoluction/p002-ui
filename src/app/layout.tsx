@@ -1,5 +1,6 @@
 import { Footer } from "@/components/footer";
 import Header from "@/components/header";
+import ProgressIndicator from "@/components/progress-indicator";
 import { QueryProvider } from "@/providers/query-client-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Metadata } from "next";
@@ -20,7 +21,7 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen overflow-x-hidden antialiased h-screen w-full">
         <QueryProvider>
           <Header />
-
+          <ProgressIndicator />
           <main className="flex-1">
             {children}
             <ReactQueryDevtools initialIsOpen={false} />

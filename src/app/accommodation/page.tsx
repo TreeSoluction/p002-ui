@@ -1,8 +1,12 @@
 import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { getAllAccommodations } from "@/services/accommodation";
 import Image from "next/image";
+import Accommodation from "./components/accommodation";
 
 export default async function Page() {
+  const accommodation = await getAllAccommodations();
+
   return (
     <>
       <FeaturesScroll />
@@ -19,6 +23,8 @@ export default async function Page() {
       </div>
 
       <CityCarousel />
+
+      <Accommodation initialData={accommodation} />
     </>
   );
 }

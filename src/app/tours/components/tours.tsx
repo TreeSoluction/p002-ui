@@ -2,11 +2,12 @@
 
 import { fetchExcursionsByUF } from "@/services/tours";
 
+import Link from "@/components/link";
 import { IResponse } from "@/interfaces/IResponse";
 import { ITour } from "@/interfaces/ITours";
 import { useQuery } from "@tanstack/react-query";
 import { Phone, Target } from "lucide-react";
-import Link from "next/link";
+
 import { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { States } from "./states";

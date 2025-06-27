@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "@/components/link";
 import Image from "next/image";
-import Link from "next/link";
+
 import { useEffect, useRef, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
