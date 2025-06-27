@@ -1,11 +1,11 @@
 "use client";
 
+import { Card } from "@/components/card";
 import { IResponse } from "@/interfaces/IResponse";
 import { IRestaurant } from "@/interfaces/IRestaurant";
 import { getAllRestaurants } from "@/services/restaurants";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { RestaurantCard } from "./card";
 
 interface RestaurantProps {
   initialData: IResponse<IRestaurant[]>;
@@ -32,7 +32,7 @@ export default function Restaurant({ initialData }: RestaurantProps) {
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
             {restaurantData.data.map((item) => (
-              <RestaurantCard key={item.id} data={item} />
+              <Card key={item.id} data={item} />
             ))}
           </ul>
 

@@ -1,11 +1,16 @@
 import Link from "@/components/link";
-import { IAccommodation } from "@/interfaces/IAccommodation";
-import { IFreetter } from "@/interfaces/IFreetter";
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
 
 interface IFreetterCardProps {
-  data: IFreetter | IAccommodation;
+  data: {
+    id: number;
+    nome: string;
+    local: string;
+    cidade: string;
+    imagem: string;
+    phone_numbers: string[];
+  };
 }
 
 export function Card({ data }: IFreetterCardProps) {

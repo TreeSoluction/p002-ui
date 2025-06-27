@@ -1,8 +1,12 @@
 import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { getAllParkings } from "@/services/parkings";
 import Image from "next/image";
+import Parkings from "./components/parkings";
 
 export default async function Page() {
+  const parkings = await getAllParkings();
+
   return (
     <>
       <FeaturesScroll />
@@ -19,6 +23,8 @@ export default async function Page() {
       </div>
 
       <CityCarousel />
+
+      <Parkings initialData={parkings} />
     </>
   );
 }
