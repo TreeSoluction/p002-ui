@@ -59,7 +59,7 @@ export default function Freetter({ initialData }: FreetterProps) {
         </>
       ) : (
         <div className="text-center text-gray-600 mt-8">
-          <p className="text-lg">😕 Nenhuma fretteiro encontrado.</p>
+          <p className="text-lg">😕 Nenhuma freteiro encontrado.</p>
           <p className="text-sm mt-1">Tente novamente mais tarde!</p>
         </div>
       )}
