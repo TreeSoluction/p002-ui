@@ -4,6 +4,7 @@ import ProgressIndicator from "@/components/progress-indicator";
 import { QueryProvider } from "@/providers/query-client-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen overflow-x-hidden antialiased h-screen w-full">
         <QueryProvider>
           <Header />
-          <ProgressIndicator />
+          <Suspense fallback={null}>
+            <ProgressIndicator />
+          </Suspense>
           <main className="flex-1">
             {children}
             <ReactQueryDevtools initialIsOpen={false} />
