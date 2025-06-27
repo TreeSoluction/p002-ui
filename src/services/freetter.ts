@@ -1,12 +1,12 @@
-import { IAccommodation } from "@/interfaces/IAccommodation";
+import { IFreetter } from "@/interfaces/IFreetter";
 import { IResponse } from "@/interfaces/IResponse";
 import { api } from "./api";
 
-export async function getAllAccommodations(
+export async function getAllFreetters(
   size: number = 10,
   page: number = 0,
-): Promise<IResponse<IAccommodation[]>> {
-  const response = await api.get(`/hospedagens`, {
+): Promise<IResponse<IFreetter[]>> {
+  const response = await api.get(`/freteiros`, {
     params: {
       size,
       page,

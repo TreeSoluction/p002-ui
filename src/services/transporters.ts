@@ -14,7 +14,7 @@ export async function getAllTransporters(
   });
 
   return {
-    data: response.data.data,
+    data: response.data.data || [],
     totalPages: response.data.totalPages,
     size: response.data.size,
     page: response.data.page,

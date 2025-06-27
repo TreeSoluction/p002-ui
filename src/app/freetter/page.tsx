@@ -1,8 +1,12 @@
 import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { getAllFreetters } from "@/services/freetter";
 import Image from "next/image";
+import Freetter from "./components/freetter";
 
 export default async function Page() {
+  const freetter = await getAllFreetters();
+
   return (
     <>
       <FeaturesScroll />
@@ -19,6 +23,8 @@ export default async function Page() {
       </div>
 
       <CityCarousel />
+
+      <Freetter initialData={freetter} />
     </>
   );
 }

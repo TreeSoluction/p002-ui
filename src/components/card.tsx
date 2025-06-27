@@ -1,13 +1,14 @@
 import Link from "@/components/link";
 import { IAccommodation } from "@/interfaces/IAccommodation";
+import { IFreetter } from "@/interfaces/IFreetter";
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
 
-interface IAccommodationCardProps {
-  data: IAccommodation;
+interface IFreetterCardProps {
+  data: IFreetter | IAccommodation;
 }
 
-export function AccommodationCard({ data }: IAccommodationCardProps) {
+export function Card({ data }: IFreetterCardProps) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-xl p-4 gap-4 w-full max-w-4xl shadow-sm">
       <div className="w-24 h-24 min-w-[96px] relative rounded-xl overflow-hidden bg-white">

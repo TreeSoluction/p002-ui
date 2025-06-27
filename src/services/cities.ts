@@ -14,7 +14,7 @@ export async function getCities(
   });
 
   return {
-    data: response.data.data,
+    data: response.data.data || [],
     page: response.data.page,
     size: response.data.size,
     totalPages: response.data.totalPages,
