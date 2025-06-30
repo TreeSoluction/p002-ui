@@ -39,16 +39,10 @@ export default function HeaderMenu() {
             <Link href="/about">Sobre nós</Link>
           </li>
           <li>
-            <Link href="/servicos">Serviços</Link>
+            <Link href="/contact">Contato</Link>
           </li>
           <li>
-            <Link href="/marcas">Marcas</Link>
-          </li>
-          <li>
-            <Link href="/contato">Contato</Link>
-          </li>
-          <li>
-            <Link href="/cidades">Cidades</Link>
+            <Link href="/cities">Cidades</Link>
           </li>
           <li>
             <Link href="/sac">SAC</Link>
