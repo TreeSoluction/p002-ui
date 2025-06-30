@@ -8,7 +8,7 @@ export default function ContactPage() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 text-gray-800">
       <div className="flex flex-col items-center gap-3 mb-10 text-center">
-        <PhoneIcon className="w-10 h-10 text-green-600" />
+        <PhoneIcon className="w-12 h-12 text-green-600" />
         <h1 className="text-4xl sm:text-5xl font-semibold">Contato</h1>
       </div>
 
