@@ -36,7 +36,7 @@ export default function HeaderMenu() {
 
         <ul className="space-y-4 text-lg">
           <li>
-            <Link href="/sobre-nos">Sobre nós</Link>
+            <Link href="/about">Sobre nós</Link>
           </li>
           <li>
             <Link href="/servicos">Serviços</Link>
