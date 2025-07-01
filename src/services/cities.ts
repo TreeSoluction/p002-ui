@@ -28,3 +28,17 @@ export async function getCityById(id: string): Promise<IResponse<ICity>> {
     data: response.data,
   };
 }
+
+export async function getCitiesByName(
+  search: string,
+): Promise<IResponse<ICity[]>> {
+  const response = await api.get(`/cidades`, {
+    params: {
+      search,
+    },
+  });
+
+  return {
+    data: response.data,
+  };
+}

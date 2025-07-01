@@ -26,20 +26,22 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
       if (!response.data) {
         throw new Error("Failed to fetch cities");
       }
-      const fetchedCities = response.data;
-      setCities(fetchedCities);
-
-      if (initialCityName) {
-        const index = fetchedCities.findIndex(
-          (c) => c.nome.toLowerCase() === initialCityName.toLowerCase(),
-        );
-        if (index >= 0) {
-          setActiveIndex(index);
-          swiperRef.current?.slideToLoop(index, 0);
-        }
-      }
+      setCities(response.data);
     })();
   }, [initialCityName]);
+
+  useEffect(() => {
+    if (initialCityName) {
+      const index = cities.findIndex(
+        (c) => c.nome.toLowerCase() === initialCityName.toLowerCase(),
+      );
+
+      if (index >= 0) {
+        setActiveIndex(index);
+        swiperRef.current?.slideToLoop(index, 500);
+      }
+    }
+  }, [cities, initialCityName]);
 
   const getSlideClass = (index: number) => {
     if (index === activeIndex) return "scale-105 opacity-100";
@@ -58,6 +60,7 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
       </h2>
 
       <div className="relative">
+        {/* Botões personalizados */}
         <button
           className="custom-prev w-10 h-10 absolute -left-6 top-1/2 -translate-y-1/2 z-10 rounded-full flex items-center justify-center cursor-pointer"
           aria-label="Previous"
@@ -71,6 +74,7 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
           <ArrowRight className="w-6 h-6" />
         </button>
 
+        {/* Swiper principal */}
         <Swiper
           modules={[Navigation]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -90,7 +94,10 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
             1280: { slidesPerView: 3 },
           }}
         >
-          {cities.map((city, index) => {
+          {cities.map((city) => {
+            const realIndex = cities.findIndex((c) => c.nome === city.nome);
+            const isActive = realIndex === activeIndex;
+
             const content = (
               <div className="flex flex-col items-center justify-center text-center">
                 <div className="relative w-full h-40 rounded-3xl overflow-hidden shadow-lg bg-white p-2">
@@ -105,7 +112,7 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
                 </div>
                 <span
                   className={`mt-3 text-lg font-semibold ${
-                    index === activeIndex ? "text-black" : "text-gray-400"
+                    isActive ? "text-black" : "text-gray-400"
                   }`}
                 >
                   {city.nome}
@@ -116,14 +123,10 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
             return (
               <SwiperSlide
                 key={city.nome}
-                className={`transition-all duration-300 ease-in-out ${getSlideClass(index)}`}
+                className={`transition-all duration-300 ease-in-out ${getSlideClass(realIndex)}`}
               >
-                {index === activeIndex ? (
-                  <Link
-                    href={`/city/${city.nome.toLowerCase().replaceAll(" ", "-")}?id=${city.id}`}
-                  >
-                    {content}
-                  </Link>
+                {isActive ? (
+                  <Link href={`/city?id=${city.id}`}>{content}</Link>
                 ) : (
                   <div aria-hidden>{content}</div>
                 )}

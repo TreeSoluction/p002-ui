@@ -1,4 +1,3 @@
-import { Carousel } from "@/components/carousel";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
 import { features } from "@/utils/features";
 import Image from "next/image";
@@ -6,9 +5,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div>
-      <Carousel />
-
-      <div className="w-full px-4">
+      <div className="w-full px-4 my-4">
         <Image
           src="/anuncio.png"
           alt="Imagem de Anúncio"
@@ -18,7 +15,6 @@ export default function Home() {
           priority
         />
       </div>
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-10 gap-y-8 px-4 py-6 place-items-center">
         {features.map((item, index) => (
           <FeatureCard
@@ -31,11 +27,9 @@ export default function Home() {
           />
         ))}
       </div>
-
       <div className="w-full text-2xl text-center py-8 my-4 rounded-bl-4xl rounded-tr-4xl text-white bg-green-bg">
         CONFIRA O CALENDÁRIO DAS FERIAS
       </div>
-
       <div></div>
     </div>
   );

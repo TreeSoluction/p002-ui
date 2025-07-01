@@ -1,7 +1,5 @@
-"use client";
-
+import Link from "@/components/link";
 import { MailIcon, PhoneIcon } from "lucide-react";
-import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function ContactPage() {

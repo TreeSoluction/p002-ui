@@ -2,16 +2,16 @@ import Link from "@/components/link";
 import { ISegment } from "@/interfaces/ISegment";
 import Image from "next/image";
 
-export function CityCards({
+export function SegmentCard({
   segment,
   cityId,
 }: {
   segment: ISegment;
-  cityId: string;
+  cityId?: string;
 }) {
   return (
     <Link
-      href={`/segment/${segment.name}?cityId=${cityId}`}
+      href={`/segment/${segment.name}?cityId=${cityId ?? ""}`}
       className="flex flex-col items-center justify-start gap-2 w-full max-w-[120px] sm:max-w-[140px] md:max-w-[240px] lg:max-w-[260px] transition-transform hover:scale-105"
     >
       <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-md bg-white">
