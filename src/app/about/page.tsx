@@ -1,6 +1,6 @@
 import { InfoIcon } from "lucide-react";
 
-export default function AboutPage() {
+export default function Page() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 text-gray-800">
       <div className="flex flex-col items-center gap-3 mb-10 text-center">
