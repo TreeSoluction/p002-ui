@@ -2,7 +2,7 @@ import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { api } from "./api";
 
-export async function getCities(
+export async function getAllCities(
   size: number = 10,
   page: number = 0,
 ): Promise<IResponse<ICity[]>> {
@@ -29,7 +29,7 @@ export async function getCityById(id: string): Promise<IResponse<ICity>> {
   };
 }
 
-export async function getCitiesByName(
+export async function getAllCitiesByName(
   search: string,
 ): Promise<IResponse<ICity[]>> {
   const response = await api.get(`/cidades`, {

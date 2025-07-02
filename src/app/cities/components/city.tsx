@@ -2,8 +2,9 @@
 
 import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
-import { getCities } from "@/services/cities";
+import { getAllCities } from "@/services/cities";
 import { useQuery } from "@tanstack/react-query";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import CityCard from "./card";
 
@@ -17,7 +18,7 @@ export default function City({ initialData }: CityProps) {
 
   const { data, isLoading } = useQuery<IResponse<ICity[]>>({
     queryKey: ["cities", page],
-    queryFn: () => getCities(size, page),
+    queryFn: () => getAllCities(size, page),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });
@@ -25,35 +26,41 @@ export default function City({ initialData }: CityProps) {
   const cityData = data ?? { data: [], totalPages: 0, page: 0, size };
 
   return (
-    <div className="py-8 px-4">
+    <div className="py-8 px-2 sm:px-4">
       {isLoading ? (
         <p className="text-center text-gray-600">Carregando cidades...</p>
       ) : cityData.data.length > 0 ? (
         <>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <ul className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
             {cityData.data.map((city, index) => (
               <CityCard city={city} key={index} />
             ))}
           </ul>
 
-          <div className="flex justify-center items-center gap-4 mt-6">
+          <div className="flex justify-center gap-4 items-center mt-6 max-w-6xl mx-auto px-4">
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 0))}
               disabled={page === 0}
-              className="px-4 py-2 bg-blue-800 text-white rounded disabled:opacity-50"
+              aria-label="Página anterior"
+              className="p-2 bg-blue-800 text-white rounded disabled:opacity-50 transition hover:bg-blue-700 disabled:hover:bg-blue-800 flex items-center justify-center"
             >
-              Anterior
+              <ChevronLeft size={24} />
             </button>
-            <span className="text-sm text-gray-600">Página {page + 1}</span>
+
+            <span className="text-sm text-gray-600">
+              Página {page + 1} de {cityData.totalPages}
+            </span>
+
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={
                 page + 1 >= (cityData.totalPages ?? 0) ||
                 (cityData.totalPages ?? 0) === 0
               }
-              className="px-4 py-2 bg-blue-800 text-white rounded disabled:opacity-50"
+              aria-label="Próxima página"
+              className="p-2 bg-blue-800 text-white rounded disabled:opacity-50 transition hover:bg-blue-700 disabled:hover:bg-blue-800 flex items-center justify-center"
             >
-              Próxima
+              <ChevronRight size={24} />
             </button>
           </div>
         </>

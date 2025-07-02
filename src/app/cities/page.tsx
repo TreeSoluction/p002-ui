@@ -1,8 +1,8 @@
-import { getCities } from "@/services/cities";
+import { getAllCities } from "@/services/cities";
 import City from "./components/city";
 
 export default async function Page() {
-  const cities = await getCities();
+  const cities = await getAllCities();
 
   return (
     <>

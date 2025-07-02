@@ -1,10 +1,21 @@
+import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
+import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const cities = (await getAllCities()).data;
+
   return (
     <div className="">
+      <div className="py-4">
+        <h2 className="text-center text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">
+          Selecione uma cidade
+        </h2>
+        <CitiesCarousel cities={cities} />
+      </div>
+
       <div className="w-full my-4">
         <Image
           src="/anuncio.png"

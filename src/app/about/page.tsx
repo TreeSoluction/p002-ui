@@ -2,13 +2,15 @@ import { InfoIcon } from "lucide-react";
 
 export default function Page() {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 text-gray-800">
-      <div className="flex flex-col items-center gap-3 mb-10 text-center">
-        <InfoIcon className="w-12 h-12 text-blue-600" />
-        <h1 className="text-4xl sm:text-5xl font-semibold">Sobre nós</h1>
+    <div className="max-w-4xl mx-auto px-6 sm:px-12 py-12 text-gray-800">
+      <div className="flex flex-col items-center gap-2 sm:gap-3 mb-4 text-center">
+        <InfoIcon className="w-8 h-8 sm:w-12 sm:h-12 text-blue-600" />
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-semibold">
+          Sobre nós
+        </h1>
       </div>
 
-      <div className="space-y-8 leading-loose text-justify text-xl sm:text-2xl">
+      <div className="space-y-8 leading-loose sm:leading-relaxed text-base sm:text-xl md:text-2xl text-left sm:text-justify">
         <p>
           A Feiras de Pernambuco é uma startup que centraliza as principais
           feiras têxteis do estado em um só aplicativo. Em vez de perder tempo

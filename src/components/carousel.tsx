@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { NavigationOptions, Swiper as SwiperClass } from "swiper/types";
 
 import { ICity, IStateCardProps } from "@/interfaces/ICity";
-import { getCities } from "@/services/cities";
+import { getAllCities } from "@/services/cities";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -22,7 +22,7 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
 
   useEffect(() => {
     (async () => {
-      const response = await getCities();
+      const response = await getAllCities();
       if (!response.data) {
         throw new Error("Failed to fetch cities");
       }
@@ -144,7 +144,7 @@ export function CityCarousel() {
 
   useEffect(() => {
     (async () => {
-      const response = await getCities();
+      const response = await getAllCities();
       if (!response.data) {
         throw new Error("Failed to fetch cities");
       }
