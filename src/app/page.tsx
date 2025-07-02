@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
-      <div className="w-full px-4 my-4">
+    <div className="">
+      <div className="w-full my-4">
         <Image
           src="/anuncio.png"
           alt="Imagem de Anúncio"
@@ -15,22 +15,24 @@ export default function Home() {
           priority
         />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-10 gap-y-8 px-4 py-6 place-items-center">
-        {features.map((item, index) => (
-          <FeatureCard
-            key={index}
-            icon={item.icon}
-            label={item.label}
-            url={item.url}
-            iconSize="w-16 h-16"
-            textSize="text-lg"
-          />
-        ))}
+
+      <div className="py-6">
+        <div className="grid grid-cols-4 gap-x-1 gap-y-3 place-items-center">
+          {features.slice(0, 8).map((item, index) => (
+            <FeatureCard
+              key={index}
+              icon={item.icon}
+              label={item.label}
+              url={item.url}
+              textSize="text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px]"
+            />
+          ))}
+        </div>
       </div>
-      <div className="w-full text-2xl text-center py-8 my-4 rounded-bl-4xl rounded-tr-4xl text-white bg-green-bg">
+
+      <div className="text-center py-6 my-4 rounded-bl-4xl rounded-tr-4xl text-white bg-green-bg text-sm sm:text-base md:text-base px-4">
         CONFIRA O CALENDÁRIO DAS FERIAS
       </div>
-      <div></div>
     </div>
   );
 }

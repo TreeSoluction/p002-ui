@@ -3,6 +3,6 @@ export interface FeatureCardProps
   icon: string;
   label: string;
   url: string;
-  iconSize?: string;
+  iconSize?: number;
   textSize?: string;
 }
