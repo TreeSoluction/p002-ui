@@ -1,11 +1,13 @@
+import { Banner } from "@/components/banner";
 import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
 import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
-import Image from "next/image";
 
 export default async function Home() {
   const cities = (await getAllCities()).data;
+
+  const carouselImages = ["/anuncio.png", "/anuncio.png", "/anuncio.png"];
 
   return (
     <div className="">
@@ -17,13 +19,11 @@ export default async function Home() {
       </div>
 
       <div className="w-full my-4">
-        <Image
-          src="/anuncio.png"
-          alt="Imagem de Anúncio"
-          width={1920}
-          height={1080}
-          className="w-full h-auto rounded-4xl"
-          priority
+        <Banner
+          images={carouselImages}
+          autoPlay={true}
+          autoPlayInterval={5000}
+          className=""
         />
       </div>
 
