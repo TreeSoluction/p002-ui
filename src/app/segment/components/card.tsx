@@ -12,9 +12,9 @@ export function SegmentCard({
   return (
     <Link
       href={`/segment/${segment.name}?cityId=${cityId ?? ""}`}
-      className="flex flex-col items-center justify-start gap-2 w-full max-w-[120px] sm:max-w-[140px] md:max-w-[240px] lg:max-w-[260px] transition-transform hover:scale-105"
+      className="flex flex-col items-center justify-start gap-1 sm:gap-2 w-full transition-transform hover:scale-105"
     >
-      <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-md bg-white">
+      <div className="relative aspect-square w-full rounded-lg sm:rounded-xl overflow-hidden shadow bg-white">
         <Image
           src={segment.image}
           alt={segment.name}
@@ -22,7 +22,7 @@ export function SegmentCard({
           className="object-cover"
         />
       </div>
-      <p className="text-xs sm:text-sm font-bold uppercase text-center break-words leading-tight">
+      <p className="text-[10px] sm:text-xs md:text-sm font-bold uppercase text-center leading-tight break-words">
         {segment.name}
       </p>
     </Link>

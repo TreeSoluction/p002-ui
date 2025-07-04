@@ -12,7 +12,6 @@ export function FeaturesScroll() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [scrollAmount, setScrollAmount] = useState(0);
 
-  // Atualiza estado das setas
   const updateArrows = () => {
     const el = containerRef.current;
     if (!el) return;
@@ -20,7 +19,6 @@ export function FeaturesScroll() {
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
   };
 
-  // Detecta tamanho do card + gap e define scrollAmount (4 cards)
   useEffect(() => {
     const el = containerRef.current;
     const cardEl = cardRef.current;
