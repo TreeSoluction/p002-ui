@@ -1,4 +1,3 @@
-import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { getAllAccommodations } from "@/services/accommodation";
 import Image from "next/image";
@@ -21,8 +20,6 @@ export default async function Page() {
 
         <h1 className="text-3xl font-semibold">Hospedagens</h1>
       </div>
-
-      <CityCarousel />
 
       <Accommodation initialData={accommodation} />
     </>

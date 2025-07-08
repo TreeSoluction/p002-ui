@@ -3,6 +3,7 @@ import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
 import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
+import { CalendarDays } from "lucide-react";
 
 export default async function Home() {
   const cities = (await getAllCities()).data;
@@ -44,6 +45,8 @@ export default async function Home() {
       <div className="text-center py-6 my-4 rounded-bl-4xl rounded-tr-4xl text-white bg-green-bg text-sm sm:text-base md:text-base px-4">
         CONFIRA O CALENDÁRIO DAS FERIAS
       </div>
+
+      <CalendarDays />
     </div>
   );
 }

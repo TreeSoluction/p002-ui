@@ -13,17 +13,21 @@ interface CityProps {
 }
 
 export default function City({ initialData }: CityProps) {
-  const [page, setPage] = useState(initialData.page ?? 0);
+  console.log(initialData.page);
+
+  const [page, setPage] = useState(initialData.page ?? 1);
   const size = initialData.size ?? 10;
+
+  const shouldFetch = page !== initialData.page;
 
   const { data, isLoading } = useQuery<IResponse<ICity[]>>({
     queryKey: ["cities", page],
     queryFn: () => getAllCities(size, page),
-    placeholderData: page === initialData.page ? initialData : undefined,
+    enabled: shouldFetch,
     staleTime: 1000 * 60,
   });
 
-  const cityData = data ?? { data: [], totalPages: 0, page: 0, size };
+  const cityData = page === initialData.page || !data ? initialData : data;
 
   return (
     <div className="py-8 px-2 sm:px-4">
@@ -40,7 +44,7 @@ export default function City({ initialData }: CityProps) {
           <div className="flex justify-center gap-4 items-center mt-6 max-w-6xl mx-auto px-4">
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 0))}
-              disabled={page === 0}
+              disabled={page === 1}
               aria-label="Página anterior"
               className="p-2 bg-blue-800 text-white rounded disabled:opacity-50 transition hover:bg-blue-700 disabled:hover:bg-blue-800 flex items-center justify-center"
             >
@@ -48,15 +52,12 @@ export default function City({ initialData }: CityProps) {
             </button>
 
             <span className="text-sm text-gray-600">
-              Página {page + 1} de {cityData.totalPages}
+              Página {page} de {cityData.totalPages}
             </span>
 
             <button
               onClick={() => setPage((p) => p + 1)}
-              disabled={
-                page + 1 >= (cityData.totalPages ?? 0) ||
-                (cityData.totalPages ?? 0) === 0
-              }
+              disabled={page + 1 >= (cityData.totalPages ?? 0)}
               aria-label="Próxima página"
               className="p-2 bg-blue-800 text-white rounded disabled:opacity-50 transition hover:bg-blue-700 disabled:hover:bg-blue-800 flex items-center justify-center"
             >

@@ -5,7 +5,11 @@ import { features } from "@/utils/features";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export function FeaturesScroll() {
+interface FeaturesScrollProps {
+  cityId?: string;
+}
+
+export function FeaturesScroll({ cityId }: FeaturesScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -62,15 +66,25 @@ export function FeaturesScroll() {
         ref={containerRef}
         className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent gap-6 flex-1 scroll-smooth snap-x snap-mandatory"
       >
-        {features.map((item, index) => (
-          <div
-            key={index}
-            ref={index === 0 ? cardRef : null}
-            className="snap-start"
-          >
-            <FeatureCard icon={item.icon} label={item.label} url={item.url} />
-          </div>
-        ))}
+        {features.map((item, index) => {
+          const urlWithCity = cityId
+            ? `${item.url}?cityId=${encodeURIComponent(cityId)}`
+            : item.url;
+
+          return (
+            <div
+              key={index}
+              ref={index === 0 ? cardRef : null}
+              className="snap-start"
+            >
+              <FeatureCard
+                icon={item.icon}
+                label={item.label}
+                url={urlWithCity}
+              />
+            </div>
+          );
+        })}
       </div>
 
       <button

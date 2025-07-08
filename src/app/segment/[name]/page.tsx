@@ -1,3 +1,4 @@
+import { FeaturesScroll } from "@/components/feature-scroll";
 import { getAllStores } from "@/services/store";
 import { segments } from "@/utils/segments";
 import Store from "./components/stores";
@@ -30,6 +31,8 @@ export default async function Page(props: {
 
   return (
     <>
+      <FeaturesScroll cityId={searchParams.cityId} />
+
       <Store
         initialData={stores}
         segment={segment}

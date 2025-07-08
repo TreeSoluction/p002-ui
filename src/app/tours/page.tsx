@@ -1,4 +1,3 @@
-import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { QueryProvider } from "@/providers/query-client-provider";
 
@@ -23,8 +22,6 @@ export default async function Page() {
 
         <h1 className="text-3xl font-semibold">Excursões</h1>
       </div>
-
-      <CityCarousel />
 
       <Tours />
     </QueryProvider>

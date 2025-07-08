@@ -5,11 +5,15 @@ import { api } from "./api";
 export async function getAllTransporters(
   size: number = 10,
   page: number = 0,
+  cidade?: string,
 ): Promise<IResponse<ITransport[]>> {
+  console.log(cidade);
+
   const response = await api.get(`/transportadoras`, {
     params: {
       size,
       page,
+      cidade,
     },
   });
 

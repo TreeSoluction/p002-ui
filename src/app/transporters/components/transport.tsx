@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card";
+import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { ITransport } from "@/interfaces/ITransport";
 import { getAllTransporters } from "@/services/transporters";
@@ -9,15 +10,16 @@ import { useState } from "react";
 
 interface TransportProps {
   initialData: IResponse<ITransport[]>;
+  city?: ICity;
 }
 
-export default function Transport({ initialData }: TransportProps) {
+export default function Transport({ initialData, city }: TransportProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<ITransport[]>>({
-    queryKey: ["transportes", page],
-    queryFn: () => getAllTransporters(size, page),
+    queryKey: ["transportes", page, city],
+    queryFn: () => getAllTransporters(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

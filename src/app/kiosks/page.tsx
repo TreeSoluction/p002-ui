@@ -1,4 +1,3 @@
-import { CityCarousel } from "@/components/carousel";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { getAllKiosks } from "@/services/kiosk";
 import Image from "next/image";
@@ -21,8 +20,6 @@ export default async function Page() {
 
         <h1 className="text-3xl font-semibold">Quiosques</h1>
       </div>
-
-      <CityCarousel />
 
       <Kiosk initialData={quiosques} />
     </>

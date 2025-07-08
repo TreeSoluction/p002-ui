@@ -2,6 +2,7 @@
 "use client";
 
 import { CitiesCarousel } from "@/components/cities-scroll";
+import { FeaturesScroll } from "@/components/feature-scroll";
 import { ICity } from "@/interfaces/ICity";
 import { useState } from "react";
 import { Segments } from "./segments";
@@ -28,6 +29,8 @@ export function SegmentPageClient({
 
   return (
     <>
+      <FeaturesScroll cityId={currentCityId} />
+
       <>Selecione uma cidade</>
 
       <CitiesCarousel
