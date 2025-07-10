@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/card";
 import { IAccommodation } from "@/interfaces/IAccommodation";
+import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllAccommodations } from "@/services/accommodation";
 import { useQuery } from "@tanstack/react-query";
@@ -9,15 +10,19 @@ import { useState } from "react";
 
 interface AccommodationProps {
   initialData: IResponse<IAccommodation[]>;
+  city?: ICity;
 }
 
-export default function Accommodation({ initialData }: AccommodationProps) {
+export default function Accommodation({
+  initialData,
+  city,
+}: AccommodationProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IAccommodation[]>>({
     queryKey: ["accomodation", page],
-    queryFn: () => getAllAccommodations(size, page),
+    queryFn: () => getAllAccommodations(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

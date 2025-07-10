@@ -5,11 +5,13 @@ import { api } from "./api";
 export async function getAllAccommodations(
   size: number = 10,
   page: number = 0,
+  cidade?: string,
 ): Promise<IResponse<IAccommodation[]>> {
   const response = await api.get(`/hospedagens`, {
     params: {
       size,
       page,
+      cidade,
     },
   });
 
