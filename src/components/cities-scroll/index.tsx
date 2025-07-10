@@ -10,12 +10,14 @@ import { useEffect, useState } from "react";
 interface CitiesCarouselProps {
   cities: ICity[];
   defaultCity?: ICity;
+  selectedCityId?: string;
   onCityChange?: (city: ICity) => void;
 }
 
 export function CitiesCarousel({
   cities,
   defaultCity,
+  selectedCityId,
   onCityChange,
 }: CitiesCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,6 +33,17 @@ export function CitiesCarousel({
       }
     }
   }, [defaultCity, cities]);
+
+  useEffect(() => {
+    if (selectedCityId) {
+      const selectedIndex = cities.findIndex(
+        (c) => c.id.toString() === selectedCityId,
+      );
+      if (selectedIndex !== -1 && selectedIndex !== activeIndex) {
+        setActiveIndex(selectedIndex);
+      }
+    }
+  }, [selectedCityId, cities, activeIndex]);
 
   useEffect(() => {
     if (onCityChange && cities.length > 0) {
@@ -80,10 +93,7 @@ export function CitiesCarousel({
       initial={{ opacity: 0.4, scale: 0.7 }}
       animate={{ opacity: 0.5, scale: 0.8 }}
       exit={{ opacity: 0.2, scale: 0.6 }}
-      transition={{
-        duration: 0.05,
-        ease: "easeInOut",
-      }}
+      transition={{ duration: 0.05, ease: "easeInOut" }}
       className="flex flex-col items-center gap-2"
     >
       <div className="relative w-[70px] h-[70px] md:w-[120px] md:h-[120px] rounded-xl overflow-hidden grayscale">
