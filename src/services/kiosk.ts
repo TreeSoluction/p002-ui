@@ -5,11 +5,13 @@ import { api } from "./api";
 export async function getAllKiosks(
   size: number = 10,
   page: number = 0,
+  cidade?: string,
 ): Promise<IResponse<IKiosk[]>> {
   const response = await api.get(`/quiosques`, {
     params: {
       size,
       page,
+      cidade,
     },
   });
 

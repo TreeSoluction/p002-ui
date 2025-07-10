@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card";
+import { ICity } from "@/interfaces/ICity";
 import { IKiosk } from "@/interfaces/IKiosk";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllKiosks } from "@/services/kiosk";
@@ -9,15 +10,16 @@ import { useState } from "react";
 
 interface KioskProps {
   initialData: IResponse<IKiosk[]>;
+  city?: ICity;
 }
 
-export default function Kiosk({ initialData }: KioskProps) {
+export default function Kiosk({ initialData, city }: KioskProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IKiosk[]>>({
     queryKey: ["kiosk", page],
-    queryFn: () => getAllKiosks(size, page),
+    queryFn: () => getAllKiosks(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

@@ -20,6 +20,7 @@ export default async function Page(props: {
     cityId = searchParams.cityId;
     city = cities.find((c) => c.id === +searchParams.cityId);
   }
+
   return (
     <>
       <FeaturesScroll cityId={cityId} />
