@@ -1,6 +1,7 @@
 import { FeaturesScroll } from "@/components/feature-scroll";
 
 import Image from "next/image";
+import Tours from "./components/tours";
 
 export default async function Page() {
   return (
@@ -17,6 +18,8 @@ export default async function Page() {
 
         <h1 className="text-3xl font-semibold">Excursões</h1>
       </div>
+
+      <Tours />
     </>
   );
 }
