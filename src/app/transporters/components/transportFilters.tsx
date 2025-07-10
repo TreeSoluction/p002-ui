@@ -1,12 +1,13 @@
 "use client";
 
+import { CitiesCarousel } from "@/components/cities-scroll";
 import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { ITransport } from "@/interfaces/ITransport";
 import { getAllCities } from "@/services/cities";
 import { getAllTransporters } from "@/services/transporters";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Transport from "./transport";
 
 interface TransportWithCityFilterProps {
@@ -16,20 +17,26 @@ interface TransportWithCityFilterProps {
 export default function TransportWithCityFilter({
   city: initialCity,
 }: TransportWithCityFilterProps) {
-  const [selectedCity, setSelectedCity] = useState<ICity | undefined>(
-    initialCity,
+  const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
+    initialCity?.id.toString(),
   );
+  const [selectedCityIdPending, setSelectedCityIdPending] = useState<
+    string | undefined
+  >(undefined);
   const [page, setPage] = useState(0);
   const size = 10;
 
-  // Buscar todas as cidades para o filtro
   const { data: citiesData } = useQuery<IResponse<ICity[]>>({
     queryKey: ["cities"],
     queryFn: () => getAllCities(1000, 0),
     staleTime: 1000 * 60 * 5,
   });
 
-  // Buscar transportadoras com base na cidade selecionada
+  const selectedCity = useMemo(() => {
+    const id = selectedCityIdPending ?? selectedCityId;
+    return citiesData?.data.find((city) => city.id.toString() === id);
+  }, [selectedCityId, selectedCityIdPending, citiesData]);
+
   const { data: transportersData, isLoading } = useQuery<
     IResponse<ITransport[]>
   >({
@@ -39,41 +46,68 @@ export default function TransportWithCityFilter({
     staleTime: 1000 * 60,
   });
 
-  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = citiesData?.data.find(
       (city) => city.nome === e.target.value,
     );
-
     if (!selected) return;
 
-    setSelectedCity(selected);
+    if (
+      selected.id.toString() === selectedCityId ||
+      selected.id.toString() === selectedCityIdPending
+    )
+      return;
+
+    setSelectedCityIdPending(selected.id.toString());
     setPage(0);
   };
 
+  const handleCarouselChange = (city: ICity) => {
+    const cityId = city.id.toString();
+
+    if (selectedCityIdPending === cityId) {
+      setSelectedCityId(cityId);
+      setSelectedCityIdPending(undefined);
+    } else if (cityId !== selectedCityId && !selectedCityIdPending) {
+      setSelectedCityId(cityId);
+    }
+  };
+
   return (
-    <div className="p-4 max-w-3xl mx-auto space-y-4">
-      <label className="block text-sm font-medium text-gray-700">
-        Filtrar por cidade:
-      </label>
-      <select
-        onChange={handleCityChange}
-        value={selectedCity?.nome ?? ""}
-        className="w-full border border-gray-300 rounded px-3 py-2"
-      >
-        <option value="">Selecione uma cidade</option>
-        {citiesData?.data.map((city) => (
-          <option key={city.id} value={city.nome}>
-            {city.nome}
-          </option>
-        ))}
-      </select>
+    <div className="p-4 max-w-3xl mx-auto space-y-6">
+      <div className="w-full px-4 md:px-0 md:max-w-md mx-auto">
+        <label
+          htmlFor="city-select"
+          className="block text-sm font-medium mb-1 text-gray-700"
+        >
+          Filtrar por cidade:
+        </label>
+        <select
+          id="city-select"
+          onChange={handleSelectChange}
+          value={selectedCity?.nome ?? ""}
+          className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
+        >
+          <option value="">Selecione uma cidade</option>
+          {citiesData?.data.map((city) => (
+            <option key={city.id} value={city.nome}>
+              {city.nome}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {citiesData?.data && (
+        <CitiesCarousel
+          cities={citiesData.data}
+          defaultCity={initialCity}
+          selectedCityId={selectedCityIdPending}
+          onCityChange={handleCarouselChange}
+        />
+      )}
 
       {selectedCity && transportersData && (
-        <Transport
-          initialData={transportersData}
-          city={selectedCity}
-          // page e setPage podem ser passados aqui também, se quiser controle externo
-        />
+        <Transport initialData={transportersData} city={selectedCity} />
       )}
 
       {selectedCity && isLoading && (
