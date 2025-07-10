@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card";
+import { ICity } from "@/interfaces/ICity";
 import { IParking } from "@/interfaces/IParking";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllParkings } from "@/services/parkings";
@@ -9,15 +10,16 @@ import { useState } from "react";
 
 interface ParkingsProps {
   initialData: IResponse<IParking[]>;
+  city: ICity;
 }
 
-export default function Parkings({ initialData }: ParkingsProps) {
+export default function Parkings({ initialData, city }: ParkingsProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IParking[]>>({
     queryKey: ["parking", page],
-    queryFn: () => getAllParkings(size, page),
+    queryFn: () => getAllParkings(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

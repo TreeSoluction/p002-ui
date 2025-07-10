@@ -5,11 +5,13 @@ import { api } from "./api";
 export async function getAllParkings(
   size: number = 10,
   page: number = 0,
+  cidade?: string,
 ): Promise<IResponse<IParking[]>> {
   const response = await api.get(`/estacionamentos`, {
     params: {
       size,
       page,
+      cidade,
     },
   });
 
