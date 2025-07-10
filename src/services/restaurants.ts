@@ -5,11 +5,13 @@ import { api } from "./api";
 export async function getAllRestaurants(
   size: number = 10,
   page: number = 0,
+  cidade?: string,
 ): Promise<IResponse<IRestaurant[]>> {
   const response = await api.get(`/restaurantes`, {
     params: {
       size,
       page,
+      cidade,
     },
   });
 

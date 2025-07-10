@@ -7,8 +7,6 @@ export async function getAllTransporters(
   page: number = 0,
   cidade?: string,
 ): Promise<IResponse<ITransport[]>> {
-  console.log(cidade);
-
   const response = await api.get(`/transportadoras`, {
     params: {
       size,

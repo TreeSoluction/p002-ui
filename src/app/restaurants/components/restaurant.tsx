@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card";
+import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { IRestaurant } from "@/interfaces/IRestaurant";
 import { getAllRestaurants } from "@/services/restaurants";
@@ -9,15 +10,16 @@ import { useState } from "react";
 
 interface RestaurantProps {
   initialData: IResponse<IRestaurant[]>;
+  city?: ICity;
 }
 
-export default function Restaurant({ initialData }: RestaurantProps) {
+export default function Restaurant({ initialData, city }: RestaurantProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IRestaurant[]>>({
-    queryKey: ["restaurantes", page],
-    queryFn: () => getAllRestaurants(size, page),
+    queryKey: ["restaurantes", page, city],
+    queryFn: () => getAllRestaurants(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });
