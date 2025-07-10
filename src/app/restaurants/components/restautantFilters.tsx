@@ -111,9 +111,7 @@ export default function RestaurantWithCityFilter({
       )}
 
       {selectedCity && isLoading && (
-        <p className="text-center text-gray-600">
-          Carregando Restaurantadoras...
-        </p>
+        <p className="text-center text-gray-600">Carregando Restaurantes...</p>
       )}
     </div>
   );

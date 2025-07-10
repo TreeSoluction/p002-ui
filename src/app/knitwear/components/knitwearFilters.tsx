@@ -2,21 +2,21 @@
 
 import { CitiesCarousel } from "@/components/cities-scroll";
 import { ICity } from "@/interfaces/ICity";
-import { IKiosk } from "@/interfaces/IKiosk";
+import { IKnitwear } from "@/interfaces/IKnitwear";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllCities } from "@/services/cities";
-import { getAllKiosks } from "@/services/kiosk";
+import { getAllKnitwears } from "@/services/knitwear";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import Kiosk from "./kiosk";
+import Knitwear from "./knitwear";
 
-interface KioskWithCityFilterProps {
+interface KnitwearWithCityFilterProps {
   city?: ICity;
 }
 
-export default function KioskWithCityFilter({
+export default function KnitwearWithCityFilter({
   city: initialCity,
-}: KioskWithCityFilterProps) {
+}: KnitwearWithCityFilterProps) {
   const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
     initialCity?.id.toString(),
   );
@@ -37,12 +37,14 @@ export default function KioskWithCityFilter({
     return citiesData?.data.find((city) => city.id.toString() === id);
   }, [selectedCityId, selectedCityIdPending, citiesData]);
 
-  const { data: KioskersData, isLoading } = useQuery<IResponse<IKiosk[]>>({
-    queryKey: ["Kioskes", page, selectedCity?.nome],
-    queryFn: () => getAllKiosks(size, page, selectedCity?.nome),
-    enabled: !!selectedCity,
-    staleTime: 1000 * 60,
-  });
+  const { data: KnitwearersData, isLoading } = useQuery<IResponse<IKnitwear[]>>(
+    {
+      queryKey: ["Knitweares", page, selectedCity?.nome],
+      queryFn: () => getAllKnitwears(size, page, selectedCity?.nome),
+      enabled: !!selectedCity,
+      staleTime: 1000 * 60,
+    },
+  );
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = citiesData?.data.find(
@@ -104,12 +106,12 @@ export default function KioskWithCityFilter({
         />
       )}
 
-      {selectedCity && KioskersData && (
-        <Kiosk initialData={KioskersData} city={selectedCity} />
+      {selectedCity && KnitwearersData && (
+        <Knitwear initialData={KnitwearersData} city={selectedCity} />
       )}
 
       {selectedCity && isLoading && (
-        <p className="text-center text-gray-600">Carregando Quiosques...</p>
+        <p className="text-center text-gray-600">Carregando Malharias...</p>
       )}
     </div>
   );

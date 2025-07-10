@@ -111,9 +111,7 @@ export default function AccommodationWithCityFilter({
       )}
 
       {selectedCity && isLoading && (
-        <p className="text-center text-gray-600">
-          Carregando Accommodationadoras...
-        </p>
+        <p className="text-center text-gray-600">Carregando Hospedagens...</p>
       )}
     </div>
   );

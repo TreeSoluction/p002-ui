@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card";
+import { ICity } from "@/interfaces/ICity";
 import { IKnitwear } from "@/interfaces/IKnitwear";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllKnitwears } from "@/services/knitwear";
@@ -9,15 +10,16 @@ import { useState } from "react";
 
 interface KnitwearProps {
   initialData: IResponse<IKnitwear[]>;
+  city: ICity;
 }
 
-export default function Knitwear({ initialData }: KnitwearProps) {
+export default function Knitwear({ initialData, city }: KnitwearProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IKnitwear[]>>({
     queryKey: ["knitwear", page],
-    queryFn: () => getAllKnitwears(size, page),
+    queryFn: () => getAllKnitwears(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

@@ -109,7 +109,9 @@ export default function ParkingWithCityFilter({
       )}
 
       {selectedCity && isLoading && (
-        <p className="text-center text-gray-600">Carregando Parkingadoras...</p>
+        <p className="text-center text-gray-600">
+          Carregando Estacionamentos...
+        </p>
       )}
     </div>
   );

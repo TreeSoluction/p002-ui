@@ -5,11 +5,13 @@ import { api } from "./api";
 export async function getAllKnitwears(
   size: number = 10,
   page: number = 0,
+  cidade?: string,
 ): Promise<IResponse<IKnitwear[]>> {
   const response = await api.get(`/malharias`, {
     params: {
       size,
       page,
+      cidade,
     },
   });
 

@@ -1,14 +1,29 @@
 import { FeaturesScroll } from "@/components/feature-scroll";
-import { getAllKnitwears } from "@/services/knitwear";
+import { ICity } from "@/interfaces/ICity";
+import { getAllCities } from "@/services/cities";
 import Image from "next/image";
-import Knitwear from "./components/knitwear";
+import KnitwearWithCityFilter from "./components/knitwearFilters";
 
-export default async function Page() {
-  const knitwear = await getAllKnitwears();
+type Params = Promise<{ city: string }>;
+type SearchParams = Promise<{ cityId: string }>;
+
+export default async function Page(props: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
+  let city: ICity | undefined;
+  let cityId: string | undefined;
+  const cities = (await getAllCities()).data;
+  const searchParams = await props.searchParams;
+
+  if (searchParams.cityId) {
+    cityId = searchParams.cityId;
+    city = cities.find((c) => c.id === +searchParams.cityId);
+  }
 
   return (
     <>
-      <FeaturesScroll />
+      <FeaturesScroll cityId={cityId} />
 
       <div className="flex flex-col items-center justify-center gap-4 mt-6 px-4">
         <Image
@@ -21,7 +36,7 @@ export default async function Page() {
         <h1 className="text-3xl font-semibold">Malharias</h1>
       </div>
 
-      <Knitwear initialData={knitwear} />
+      <KnitwearWithCityFilter city={city} />
     </>
   );
 }

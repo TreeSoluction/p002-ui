@@ -111,9 +111,7 @@ export default function FreetterWithCityFilter({
       )}
 
       {selectedCity && isLoading && (
-        <p className="text-center text-gray-600">
-          Carregando Freetteradoras...
-        </p>
+        <p className="text-center text-gray-600">Carregando Freteiros...</p>
       )}
     </div>
   );
