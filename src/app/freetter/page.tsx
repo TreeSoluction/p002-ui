@@ -1,14 +1,29 @@
 import { FeaturesScroll } from "@/components/feature-scroll";
-import { getAllFreetters } from "@/services/freetter";
+import { ICity } from "@/interfaces/ICity";
+import { getAllCities } from "@/services/cities";
 import Image from "next/image";
-import Freetter from "./components/freetter";
+import FreetterWithCityFilter from "./components/freetterFilters";
 
-export default async function Page() {
-  const freetter = await getAllFreetters();
+type Params = Promise<{ city: string }>;
+type SearchParams = Promise<{ cityId: string }>;
+
+export default async function Page(props: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
+  let city: ICity | undefined;
+  let cityId: string | undefined;
+  const cities = (await getAllCities()).data;
+  const searchParams = await props.searchParams;
+
+  if (searchParams.cityId) {
+    cityId = searchParams.cityId;
+    city = cities.find((c) => c.id === +searchParams.cityId);
+  }
 
   return (
     <>
-      <FeaturesScroll />
+      <FeaturesScroll cityId={cityId} />
 
       <div className="flex flex-col items-center justify-center gap-4 mt-6 px-4">
         <Image
@@ -21,7 +36,7 @@ export default async function Page() {
         <h1 className="text-3xl font-semibold">Freteiros</h1>
       </div>
 
-      <Freetter initialData={freetter} />
+      <FreetterWithCityFilter city={city} />
     </>
   );
 }

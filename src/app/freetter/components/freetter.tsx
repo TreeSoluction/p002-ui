@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card";
+import { ICity } from "@/interfaces/ICity";
 import { IFreetter } from "@/interfaces/IFreetter";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllFreetters } from "@/services/freetter";
@@ -9,15 +10,16 @@ import { useState } from "react";
 
 interface FreetterProps {
   initialData: IResponse<IFreetter[]>;
+  city: ICity;
 }
 
-export default function Freetter({ initialData }: FreetterProps) {
+export default function Freetter({ initialData, city }: FreetterProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IFreetter[]>>({
     queryKey: ["fretter", page],
-    queryFn: () => getAllFreetters(size, page),
+    queryFn: () => getAllFreetters(size, page, city.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });
