@@ -2,32 +2,66 @@
 
 import { IStore } from "@/interfaces/IStore";
 import Image from "next/image";
+import Link from "next/link";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 interface StoreViewProps {
   store: IStore;
 }
 
 export function StoreView({ store }: StoreViewProps) {
+  const hasInstagram = !!store.instagram?.trim();
+  const hasWhatsapp = !!store.whatsapp?.trim();
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="flex items-center justify-between p-4">
-        <div className="flex items-center gap-3">
-          <Image
-            src={store.imagem}
-            alt={store.nome}
-            width={50}
-            height={50}
-            className="rounded-full object-cover"
-          />
-          <div>
-            <h2 className="text-lg font-semibold">{store.nome}</h2>
-            <p className="text-sm text-gray-500">{store.categoria}</p>
+      <div className="flex items-center justify-between p-4 rounded-lg bg-gray-100">
+        <div className="flex items-start gap-4">
+          <div className="flex flex-col items-center">
+            <Image
+              src={store.imagem}
+              alt={store.nome}
+              width={60}
+              height={60}
+              className="rounded-md object-cover"
+            />
+            <span className="mt-1 text-sm font-medium text-center text-gray-800">
+              {store.nome}
+            </span>
+          </div>
+
+          <div className="flex flex-col text-sm text-gray-800 mt-1">
+            <span>{store.local}</span>
           </div>
         </div>
-      </div>
 
-      <div className="text-sm text-gray-600 ml-4">{store.cidade}</div>
-      <hr className="my-2" />
+        <div className="flex flex-col items-center gap-2">
+          {hasInstagram && (
+            <Link
+              href={store.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-200 rounded-md p-2 hover:bg-gray-300"
+            >
+              <FaInstagram className="text-purple-500 text-xl" />
+            </Link>
+          )}
+
+          {hasWhatsapp && (
+            <Link
+              href={`https://wa.me/${store.whatsapp.replace(/\D/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
+            >
+              <FaWhatsapp className="text-green-500 text-xl" />
+              <span className="text-[10px] text-gray-700 mt-1 break-words text-center">
+                {store.whatsapp}
+              </span>
+            </Link>
+          )}
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 gap-2 p-4">
         {store.produtos && store.produtos.length > 0 ? (
