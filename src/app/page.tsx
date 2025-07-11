@@ -1,12 +1,14 @@
 import { Banner } from "@/components/banner";
+import { CalendarScroll } from "@/components/calendar-scroll";
 import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
+import { getAllCalendars } from "@/services/calendar";
 import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
-import { CalendarDays } from "lucide-react";
 
 export default async function Home() {
   const cities = (await getAllCities()).data;
+  const calendars = (await getAllCalendars()).data;
 
   const carouselImages = ["/anuncio.png", "/anuncio.png", "/anuncio.png"];
 
@@ -46,7 +48,7 @@ export default async function Home() {
         CONFIRA O CALENDÁRIO DAS FERIAS
       </div>
 
-      <CalendarDays />
+      <CalendarScroll calendars={calendars} />
     </div>
   );
 }
