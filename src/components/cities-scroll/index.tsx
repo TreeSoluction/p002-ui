@@ -12,6 +12,7 @@ interface CitiesCarouselProps {
   defaultCity?: ICity;
   selectedCityId?: string;
   onCityChange?: (city: ICity) => void;
+  redirect?: boolean;
 }
 
 export function CitiesCarousel({
@@ -19,6 +20,7 @@ export function CitiesCarousel({
   defaultCity,
   selectedCityId,
   onCityChange,
+  redirect = false,
 }: CitiesCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
@@ -135,22 +137,38 @@ export function CitiesCarousel({
               transition={{ duration: 0.05, ease: "easeInOut" }}
               className="absolute inset-0"
             >
-              <Link
-                href={`/segment?cityId=${getCity(0).id}`}
-                className="flex flex-col items-center gap-2 md:gap-4 h-full hover:scale-105 transition-transform duration-200"
-              >
-                <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
-                  <Image
-                    src={getCity(0).imagem}
-                    alt={getCity(0).nome}
-                    fill
-                    className="object-cover"
-                  />
+              {redirect ? (
+                <Link
+                  href={`/segment?cityId=${getCity(0).id}`}
+                  className="flex flex-col items-center gap-2 md:gap-4 h-full hover:scale-105 transition-transform duration-200"
+                >
+                  <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
+                    <Image
+                      src={getCity(0).imagem}
+                      alt={getCity(0).nome}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <p className="text-sm md:text-lg font-semibold text-gray-800 truncate hover:text-green-bg transition-colors">
+                    {getCity(0).nome}
+                  </p>
+                </Link>
+              ) : (
+                <div className="flex flex-col items-center gap-2 md:gap-4 h-full hover:scale-105 transition-transform duration-200">
+                  <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
+                    <Image
+                      src={getCity(0).imagem}
+                      alt={getCity(0).nome}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <p className="text-sm md:text-lg font-semibold text-gray-800 truncate hover:text-green-bg transition-colors">
+                    {getCity(0).nome}
+                  </p>
                 </div>
-                <p className="text-sm md:text-lg font-semibold text-gray-800 truncate hover:text-green-bg transition-colors">
-                  {getCity(0).nome}
-                </p>
-              </Link>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>

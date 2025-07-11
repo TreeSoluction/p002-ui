@@ -18,7 +18,7 @@ export default async function Home() {
         <h2 className="text-center text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">
           Selecione uma cidade
         </h2>
-        <CitiesCarousel cities={cities} />
+        <CitiesCarousel cities={cities} redirect={true} />
       </div>
 
       <div className="w-full my-4">
