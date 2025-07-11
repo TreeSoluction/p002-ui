@@ -3,6 +3,7 @@
 import { IStore } from "@/interfaces/IStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 interface StoreCardProps {
@@ -10,6 +11,7 @@ interface StoreCardProps {
 }
 
 export default function StoreCard({ store }: StoreCardProps) {
+  const router = useRouter();
   const scrollRefMobile = useRef<HTMLDivElement>(null);
   const scrollRefDesktop = useRef<HTMLDivElement>(null);
 
@@ -27,6 +29,11 @@ export default function StoreCard({ store }: StoreCardProps) {
     if (ref.current) {
       ref.current.scrollBy({ left: 200, behavior: "smooth" });
     }
+  };
+
+  const handleBuyClick = () => {
+    const storeNameEncoded = encodeURIComponent(store.nome);
+    router.push(`/store/${storeNameEncoded}?id=${store.id}`);
   };
 
   return (
@@ -136,7 +143,10 @@ export default function StoreCard({ store }: StoreCardProps) {
         </div>
       </div>
 
-      <button className="absolute bottom-2 left-4 bg-green-500 hover:bg-green-600 px-3 py-1.5 text-white rounded text-xs sm:text-sm font-medium transition-colors">
+      <button
+        onClick={handleBuyClick}
+        className="absolute bottom-2 left-4 bg-green-500 hover:bg-green-600 px-3 py-1.5 text-white rounded text-xs sm:text-sm font-medium transition-colors"
+      >
         Compre Agora
       </button>
 

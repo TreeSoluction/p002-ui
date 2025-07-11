@@ -60,7 +60,6 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
       </h2>
 
       <div className="relative">
-        {/* Botões personalizados */}
         <button
           className="custom-prev w-10 h-10 absolute -left-6 top-1/2 -translate-y-1/2 z-10 rounded-full flex items-center justify-center cursor-pointer"
           aria-label="Previous"
@@ -74,7 +73,6 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
           <ArrowRight className="w-6 h-6" />
         </button>
 
-        {/* Swiper principal */}
         <Swiper
           modules={[Navigation]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}

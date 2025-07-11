@@ -13,8 +13,6 @@ interface CityProps {
 }
 
 export default function City({ initialData }: CityProps) {
-  console.log(initialData.page);
-
   const [page, setPage] = useState(initialData.page ?? 1);
   const size = initialData.size ?? 10;
 

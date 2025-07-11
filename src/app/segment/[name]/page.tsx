@@ -1,4 +1,5 @@
 import { FeaturesScroll } from "@/components/feature-scroll";
+import { getAllCities } from "@/services/cities";
 import { getAllStores } from "@/services/store";
 import { segments } from "@/utils/segments";
 import Store from "./components/stores";
@@ -17,7 +18,18 @@ export default async function Page(props: {
     (segment) => segment.name === decodeURIComponent(params.name),
   );
 
-  const stores = await getAllStores(10, 0, params.name, searchParams.cityId);
+  const cities = (await getAllCities(10000, 0)).data;
+
+  const city = cities.find(
+    (city) => city.id.toString() === searchParams.cityId,
+  );
+
+  const stores = await getAllStores({
+    size: 10,
+    page: 0,
+    nome: params.name,
+    cidade: city?.nome,
+  });
 
   if (!segment) {
     return (
@@ -37,6 +49,7 @@ export default async function Page(props: {
         initialData={stores}
         segment={segment}
         cityId={searchParams.cityId}
+        cities={cities}
       />
     </>
   );

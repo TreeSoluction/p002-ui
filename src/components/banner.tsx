@@ -49,7 +49,6 @@ export function Banner({
 
   return (
     <div className={`relative w-full ${className}`}>
-      {/* Container das imagens com altura fixa */}
       <div className="relative w-full h-[120px] sm:h-[150px] md:h-[200px] lg:h-[250px] overflow-hidden rounded-2xl md:rounded-3xl">
         <AnimatePresence mode="wait">
           <motion.div
@@ -76,7 +75,6 @@ export function Banner({
         </AnimatePresence>
       </div>
 
-      {/* Indicadores (pontinhos) */}
       {images.length > 1 && (
         <div className="flex justify-center gap-2 mt-3">
           {images.map((_, index) => (

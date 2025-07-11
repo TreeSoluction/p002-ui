@@ -1,5 +1,6 @@
 "use client";
 
+import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { ISegment } from "@/interfaces/ISegment";
 import { IStore } from "@/interfaces/IStore";
@@ -12,15 +13,29 @@ interface StoreProps {
   initialData: IResponse<IStore[]>;
   segment: ISegment;
   cityId?: string;
+  cities: ICity[];
 }
 
-export default function Store({ initialData, segment, cityId }: StoreProps) {
+export default function Store({
+  initialData,
+  segment,
+  cityId,
+  cities,
+}: StoreProps) {
   const [page, setPage] = useState(initialData.page ?? 0);
   const size = initialData.size ?? 10;
 
+  const city = cities.find((city) => city.id.toString() === cityId);
+
   const { data, isLoading } = useQuery<IResponse<IStore[]>>({
     queryKey: ["stores", page],
-    queryFn: () => getAllStores(size, page, segment.name, cityId),
+    queryFn: () =>
+      getAllStores({
+        size,
+        page,
+        categoria: segment.name,
+        cidade: city?.nome,
+      }),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

@@ -66,7 +66,6 @@ export default function Tours({ city: initialCity }: ToursProps) {
 
   return (
     <div className="py-8 px-4 max-w-4xl mx-auto space-y-6">
-      {/* Dropdown de cidades */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Filtrar por cidade de origem:
@@ -85,7 +84,6 @@ export default function Tours({ city: initialCity }: ToursProps) {
         </select>
       </div>
 
-      {/* Seletor de UF */}
       <States onSelect={handleSelectUF} />
 
       {selectedUF && (
