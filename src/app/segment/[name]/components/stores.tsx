@@ -28,7 +28,7 @@ export default function Store({
   const city = cities.find((city) => city.id.toString() === cityId);
 
   const { data, isLoading } = useQuery<IResponse<IStore[]>>({
-    queryKey: ["stores", page],
+    queryKey: [`store${segment.name}-${cityId}`, page],
     queryFn: () =>
       getAllStores({
         size,
