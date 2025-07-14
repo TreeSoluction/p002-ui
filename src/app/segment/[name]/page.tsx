@@ -50,6 +50,10 @@ export default async function Page(props: {
         <BackButton />
       </div>
 
+      <div className="px-4 mb-4 text-center">
+        <h1 className="text-2xl font-bold text-gray-800">{segment.name}</h1>
+      </div>
+
       <Store
         initialData={stores}
         segment={segment}
