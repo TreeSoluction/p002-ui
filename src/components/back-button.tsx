@@ -10,12 +10,7 @@ export function BackButton() {
   const router = useRouter();
 
   useEffect(() => {
-    const referrer = document.referrer;
-    const currentOrigin = window.location.origin;
-
-    if (referrer.startsWith(currentOrigin)) {
-      setCanGoBack(true);
-    }
+    setCanGoBack(window.history.length > 1);
   }, []);
 
   const handleBack = () => {
