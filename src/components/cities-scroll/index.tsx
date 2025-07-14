@@ -4,8 +4,8 @@ import { ICity } from "@/interfaces/ICity";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "../link";
 
 interface CitiesCarouselProps {
   cities: ICity[];

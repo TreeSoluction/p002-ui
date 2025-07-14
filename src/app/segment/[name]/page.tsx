@@ -1,3 +1,4 @@
+import { BackButton } from "@/components/back-button";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { getAllCities } from "@/services/cities";
 import { getAllStores } from "@/services/store";
@@ -44,6 +45,10 @@ export default async function Page(props: {
   return (
     <>
       <FeaturesScroll cityId={searchParams.cityId} />
+
+      <div className="px-4 mb-2">
+        <BackButton />
+      </div>
 
       <Store
         initialData={stores}

@@ -1,5 +1,6 @@
 "use client";
 
+import { BackButton } from "@/components/back-button";
 import Link from "@/components/link";
 import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
@@ -66,6 +67,10 @@ export default function Tours({ city: initialCity }: ToursProps) {
 
   return (
     <div className="py-8 px-4 max-w-4xl mx-auto space-y-6">
+      <div className="mb-2">
+        <BackButton />
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Filtrar por cidade de origem:

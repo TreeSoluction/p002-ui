@@ -1,3 +1,4 @@
+import { BackButton } from "@/components/back-button";
 import { getStoreById } from "@/services/store";
 import { StoreView } from "./components/store";
 
@@ -14,6 +15,10 @@ export default async function Page(props: {
 
   return (
     <main className="p-4">
+      <div className="mb-2">
+        <BackButton />
+      </div>
+
       <StoreView store={store.data} />
     </main>
   );

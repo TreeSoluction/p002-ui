@@ -1,6 +1,6 @@
 "use client";
 
-import { CitiesCarousel } from "@/components/cities-scroll";
+import { BackButton } from "@/components/back-button";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { ICity } from "@/interfaces/ICity";
 import { useMemo, useState } from "react";
@@ -18,7 +18,7 @@ export function SegmentPageClient({
   initialCity,
   initialCityId,
 }: SegmentPageClientProps) {
-  const [currentCityId, setCurrentCityId] = useState<string | undefined>(
+  const [currentCityId] = useState<string | undefined>(
     initialCity?.id.toString() ?? initialCityId,
   );
 
@@ -32,17 +32,6 @@ export function SegmentPageClient({
     if (newCityId === currentCityId || newCityId === selectedCityIdPending)
       return;
     setSelectedCityIdPending(newCityId);
-  };
-
-  const handleCarouselChange = (city: ICity) => {
-    const cityId = city.id.toString();
-
-    if (selectedCityIdPending === cityId) {
-      setCurrentCityId(cityId);
-      setSelectedCityIdPending(undefined);
-    } else if (cityId !== currentCityId && !selectedCityIdPending) {
-      setCurrentCityId(cityId);
-    }
   };
 
   const selectedCity = useMemo(() => {
@@ -61,6 +50,10 @@ export function SegmentPageClient({
   return (
     <>
       <FeaturesScroll cityId={currentCityId} />
+
+      <div className="px-4 mb-2">
+        <BackButton />
+      </div>
 
       <div className="w-full px-4 md:px-0 md:max-w-md mx-auto mb-6">
         <label
@@ -126,13 +119,6 @@ export function SegmentPageClient({
           isSearchable
         />
       </div>
-
-      <CitiesCarousel
-        cities={cities}
-        defaultCity={initialCity}
-        selectedCityId={selectedCityIdPending}
-        onCityChange={handleCarouselChange}
-      />
 
       <Segments cityId={currentCityId} />
     </>

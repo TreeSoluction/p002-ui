@@ -1,6 +1,6 @@
 "use client";
 
-import { CitiesCarousel } from "@/components/cities-scroll";
+import { BackButton } from "@/components/back-button";
 import { ICity } from "@/interfaces/ICity";
 import { IKnitwear } from "@/interfaces/IKnitwear";
 import { IResponse } from "@/interfaces/IResponse";
@@ -17,7 +17,7 @@ interface KnitwearWithCityFilterProps {
 export default function KnitwearWithCityFilter({
   city: initialCity,
 }: KnitwearWithCityFilterProps) {
-  const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
+  const [selectedCityId] = useState<string | undefined>(
     initialCity?.id.toString(),
   );
   const [selectedCityIdPending, setSelectedCityIdPending] = useState<
@@ -62,19 +62,12 @@ export default function KnitwearWithCityFilter({
     setPage(0);
   };
 
-  const handleCarouselChange = (city: ICity) => {
-    const cityId = city.id.toString();
-
-    if (selectedCityIdPending === cityId) {
-      setSelectedCityId(cityId);
-      setSelectedCityIdPending(undefined);
-    } else if (cityId !== selectedCityId && !selectedCityIdPending) {
-      setSelectedCityId(cityId);
-    }
-  };
-
   return (
     <div className="p-4 max-w-3xl mx-auto space-y-6">
+      <div className="px-4 mb-2">
+        <BackButton />
+      </div>
+
       <div className="w-full px-4 md:px-0 md:max-w-md mx-auto">
         <label
           htmlFor="city-select"
@@ -96,15 +89,6 @@ export default function KnitwearWithCityFilter({
           ))}
         </select>
       </div>
-
-      {citiesData?.data && (
-        <CitiesCarousel
-          cities={citiesData.data}
-          defaultCity={initialCity}
-          selectedCityId={selectedCityIdPending}
-          onCityChange={handleCarouselChange}
-        />
-      )}
 
       {selectedCity && KnitwearersData && (
         <Knitwear initialData={KnitwearersData} city={selectedCity} />
