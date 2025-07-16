@@ -50,6 +50,9 @@ export default function HeaderMenu() {
           <li>
             <Link href="/sac">SAC</Link>
           </li>
+          <li>
+            <Link href="/terms-of-use">Termos de Uso</Link>
+          </li>
         </ul>
       </nav>
     </div>
