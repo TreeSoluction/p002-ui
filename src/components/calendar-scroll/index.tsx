@@ -1,17 +1,15 @@
 "use client";
 
 import { ICalendar } from "@/interfaces/ICalendar";
+import { getAllCalendars } from "@/services/calendar";
 import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-interface CalendarScrollProps {
-  calendars: ICalendar[];
-}
-
-export function CalendarScroll({ calendars }: CalendarScrollProps) {
+export function CalendarScroll() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [calendars, setCalendars] = useState<ICalendar[]>([]);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [scrollAmount, setScrollAmount] = useState(0);
@@ -22,6 +20,14 @@ export function CalendarScroll({ calendars }: CalendarScrollProps) {
     setCanScrollLeft(el.scrollLeft > 0);
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = (await getAllCalendars()).data;
+
+      setCalendars(data);
+    })();
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
