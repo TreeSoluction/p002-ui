@@ -38,7 +38,7 @@ export default async function Home() {
       </div>
 
       <div className="text-center py-6 my-4 rounded-bl-4xl rounded-tr-4xl text-white bg-green-bg text-sm sm:text-base md:text-base px-4">
-        CONFIRA O CALENDÁRIO DAS FERIAS
+        CONFIRA O CALENDÁRIO DAS FEIRAS
       </div>
 
       <CalendarScroll calendars={calendars} />
