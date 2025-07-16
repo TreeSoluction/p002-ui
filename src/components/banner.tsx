@@ -49,7 +49,7 @@ export function Banner({
 
   return (
     <div className={`relative w-full ${className}`}>
-      <div className="relative w-full h-[120px] sm:h-[150px] md:h-[200px] lg:h-[250px] overflow-hidden rounded-2xl md:rounded-3xl">
+      <div className="relative w-full aspect-[3/1] sm:aspect-[4/1] md:aspect-[5/2] lg:aspect-[16/5] overflow-hidden rounded-2xl md:rounded-3xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
