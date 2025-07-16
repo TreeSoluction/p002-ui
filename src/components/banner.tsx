@@ -1,33 +1,44 @@
 "use client";
 
+import { getAllCarouselImages } from "@/services/carousel";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface BannerProps {
-  images: string[];
   autoPlay?: boolean;
   autoPlayInterval?: number;
   className?: string;
 }
 
 export function Banner({
-  images,
   autoPlay = true,
   autoPlayInterval = 5000,
   className = "",
 }: BannerProps) {
+  const [carouselImages, setCarouselImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const carouselImages = (await getAllCarouselImages()).data.map(
+        (image) => image.imagem,
+      );
+
+      setCarouselImages(carouselImages);
+    })();
+  }, []);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (!autoPlay || images.length <= 1) return;
+    if (!autoPlay || carouselImages.length <= 1) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, images.length]);
+  }, [autoPlay, autoPlayInterval, carouselImages.length]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
@@ -45,7 +56,7 @@ export function Banner({
     },
   };
 
-  if (images.length === 0) return null;
+  if (carouselImages.length === 0) return null;
 
   return (
     <div className={`relative w-full ${className}`}>
@@ -64,7 +75,7 @@ export function Banner({
             className="absolute inset-0"
           >
             <Image
-              src={images[currentIndex]}
+              src={carouselImages[currentIndex]}
               alt={`Anúncio ${currentIndex + 1}`}
               fill
               className="object-cover rounded-2xl md:rounded-3xl"
@@ -75,9 +86,9 @@ export function Banner({
         </AnimatePresence>
       </div>
 
-      {images.length > 1 && (
+      {carouselImages.length > 1 && (
         <div className="flex justify-center gap-2 mt-3">
-          {images.map((_, index) => (
+          {carouselImages.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}

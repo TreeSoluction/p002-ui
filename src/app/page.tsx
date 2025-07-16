@@ -3,17 +3,12 @@ import { CalendarScroll } from "@/components/calendar-scroll";
 import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
 import { getAllCalendars } from "@/services/calendar";
-import { getAllCarouselImages } from "@/services/carousel";
 import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
 
 export default async function Home() {
   const cities = (await getAllCities()).data;
   const calendars = (await getAllCalendars()).data;
-
-  const carouselImages = (await getAllCarouselImages()).data.map(
-    (image) => image.imagem,
-  );
 
   return (
     <div className="">
@@ -25,11 +20,7 @@ export default async function Home() {
       </div>
 
       <div className="w-full my-4">
-        <Banner
-          images={carouselImages}
-          autoPlay={true}
-          autoPlayInterval={5000}
-        />
+        <Banner autoPlay={true} autoPlayInterval={5000} />
       </div>
 
       <div className="py-6">
