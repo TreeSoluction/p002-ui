@@ -23,6 +23,7 @@ export default function Tours({ city: initialCity }: ToursProps) {
     initialCity,
   );
   const [page, setPage] = useState(0);
+  const [showStates, setShowStates] = useState(true);
   const size = 10;
 
   const { data: citiesData } = useQuery<IResponse<ICity[]>>({
@@ -52,17 +53,26 @@ export default function Tours({ city: initialCity }: ToursProps) {
   });
 
   const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = citiesData?.data.find((c) => c.nome === e.target.value);
+    const value = e.target.value;
 
-    if (!selected) return;
+    if (value === "") {
+      setSelectedCity(undefined);
+      setPage(0);
+      return;
+    }
 
-    setSelectedCity(selected);
-    setPage(0);
+    const selected = citiesData?.data.find((c) => c.nome === value);
+    if (selected) {
+      setSelectedCity(selected);
+      setPage(0);
+    }
   };
 
   const handleSelectUF = (uf: string) => {
     setSelectedUF(uf);
+    setSelectedCity(undefined);
     setPage(0);
+    setShowStates(false); // fecha os estados
   };
 
   return (
@@ -71,28 +81,47 @@ export default function Tours({ city: initialCity }: ToursProps) {
         <BackButton />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Filtrar por cidade de origem:
-        </label>
-        <select
-          onChange={handleCityChange}
-          value={selectedCity?.nome ?? ""}
-          className="w-full border border-gray-300 rounded px-3 py-2"
-        >
-          <option value="">Todas as cidades</option>
-          {citiesData?.data.map((city) => (
-            <option key={city.id} value={city.nome}>
-              {city.nome}
-            </option>
-          ))}
-        </select>
-      </div>
+      {showStates && <States onSelect={handleSelectUF} />}
 
-      <States onSelect={handleSelectUF} />
+      {!showStates && selectedUF && (
+        <div className="flex justify-between items-center mt-4">
+          <p className="text-sm text-gray-600">
+            Estado selecionado: <strong>{selectedUF}</strong>
+          </p>
+          <button
+            onClick={() => {
+              setShowStates(true); // reabre os estados
+              setSelectedUF(null);
+              setSelectedCity(undefined);
+              setPage(0);
+            }}
+            className="text-sm text-blue-700 hover:underline"
+          >
+            Trocar estado
+          </button>
+        </div>
+      )}
 
-      {selectedUF && (
+      {selectedUF && !showStates && (
         <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Filtrar por cidade de origem:
+            </label>
+            <select
+              onChange={handleCityChange}
+              value={selectedCity?.nome ?? ""}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+            >
+              <option value="">Todas as cidades</option>
+              {citiesData?.data.map((city) => (
+                <option key={city.id} value={city.nome}>
+                  {city.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <h2 className="text-xl font-bold text-center mt-6 mb-4 text-blue-900">
             Excursões disponíveis para {selectedUF}
           </h2>
