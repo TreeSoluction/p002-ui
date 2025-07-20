@@ -1,12 +1,12 @@
 "use client";
 
-import { Card } from "@/components/card";
 import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { ITransport } from "@/interfaces/ITransport";
 import { getAllTransporters } from "@/services/transporters";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import TransportCard from "./card";
 
 interface TransportProps {
   initialData: IResponse<ITransport[]>;
@@ -36,7 +36,7 @@ export default function Transport({ initialData, city }: TransportProps) {
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
             {transportData.data.map((item) => (
-              <Card key={item.id} data={item} />
+              <TransportCard key={item.id} transport={item} />
             ))}
           </ul>
 

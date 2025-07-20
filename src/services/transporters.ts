@@ -22,3 +22,16 @@ export async function getAllTransporters(
     page: response.data.page,
   };
 }
+
+export async function getTransporterById(
+  id: number,
+): Promise<IResponse<ITransport>> {
+  const response = await api.get(`/transportadoras/${id}`);
+
+  return {
+    data: response.data.data,
+    totalPages: response.data.totalPages,
+    size: response.data.size,
+    page: response.data.page,
+  };
+}

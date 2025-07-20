@@ -17,12 +17,9 @@ interface TransportWithCityFilterProps {
 export default function TransportWithCityFilter({
   city: initialCity,
 }: TransportWithCityFilterProps) {
-  const [selectedCityId] = useState<string | undefined>(
-    initialCity?.id.toString(),
+  const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
+    initialCity?.id?.toString(),
   );
-  const [selectedCityIdPending, setSelectedCityIdPending] = useState<
-    string | undefined
-  >(undefined);
   const [page, setPage] = useState(0);
   const size = 10;
 
@@ -33,32 +30,30 @@ export default function TransportWithCityFilter({
   });
 
   const selectedCity = useMemo(() => {
-    const id = selectedCityIdPending ?? selectedCityId;
-    return citiesData?.data.find((city) => city.id.toString() === id);
-  }, [selectedCityId, selectedCityIdPending, citiesData]);
+    if (!selectedCityId) return undefined;
+    return citiesData?.data.find(
+      (city) => city.id.toString() === selectedCityId,
+    );
+  }, [selectedCityId, citiesData]);
 
   const { data: transportersData, isLoading } = useQuery<
     IResponse<ITransport[]>
   >({
-    queryKey: ["transportes", page, selectedCity?.nome],
+    queryKey: ["transportes", page, selectedCity?.nome ?? "all"],
     queryFn: () => getAllTransporters(size, page, selectedCity?.nome),
-    enabled: !!selectedCity,
     staleTime: 1000 * 60,
   });
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = citiesData?.data.find(
-      (city) => city.nome === e.target.value,
-    );
-    if (!selected) return;
-
-    if (
-      selected.id.toString() === selectedCityId ||
-      selected.id.toString() === selectedCityIdPending
-    )
-      return;
-
-    setSelectedCityIdPending(selected.id.toString());
+    const value = e.target.value;
+    if (value === "") {
+      setSelectedCityId(undefined); // Limpa o filtro de cidade
+    } else {
+      const selected = citiesData?.data.find((city) => city.nome === value);
+      if (selected && selected.id.toString() !== selectedCityId) {
+        setSelectedCityId(selected.id.toString());
+      }
+    }
     setPage(0);
   };
 
@@ -81,7 +76,7 @@ export default function TransportWithCityFilter({
           value={selectedCity?.nome ?? ""}
           className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
         >
-          <option value="">Selecione uma cidade</option>
+          <option value="">Todas as cidades</option>
           {citiesData?.data.map((city) => (
             <option key={city.id} value={city.nome}>
               {city.nome}
@@ -90,11 +85,11 @@ export default function TransportWithCityFilter({
         </select>
       </div>
 
-      {selectedCity && transportersData && (
+      {transportersData && (
         <Transport initialData={transportersData} city={selectedCity} />
       )}
 
-      {selectedCity && isLoading && (
+      {isLoading && (
         <p className="text-center text-gray-600">
           Carregando transportadoras...
         </p>

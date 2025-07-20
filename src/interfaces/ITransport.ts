@@ -5,4 +5,7 @@ export interface ITransport {
   cidade: string;
   imagem: string;
   phone_numbers: string[];
+  produtos: string[];
+  whatsapp: string;
+  instagram: string;
 }
