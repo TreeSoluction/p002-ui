@@ -22,3 +22,16 @@ export async function getAllRestaurants(
     page: response.data.page,
   };
 }
+
+export async function getRestaurantById(
+  id: string,
+): Promise<IResponse<IRestaurant>> {
+  const response = await api.get(`/restaurantes/${id}`);
+
+  return {
+    data: response.data,
+    totalPages: response.data.totalPages,
+    size: response.data.size,
+    page: response.data.page,
+  };
+}
