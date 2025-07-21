@@ -1,12 +1,12 @@
 "use client";
 
-import { Card } from "@/components/card";
 import { IAccommodation } from "@/interfaces/IAccommodation";
 import { ICity } from "@/interfaces/ICity";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllAccommodations } from "@/services/accommodation";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import AccommodationCard from "./card";
 
 interface AccommodationProps {
   initialData: IResponse<IAccommodation[]>;
@@ -37,7 +37,7 @@ export default function Accommodation({
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
             {accommodationData.data.map((item) => (
-              <Card key={item.id} data={item} />
+              <AccommodationCard key={item.id} accommodation={item} />
             ))}
           </ul>
 

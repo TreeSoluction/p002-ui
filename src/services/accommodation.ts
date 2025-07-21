@@ -22,3 +22,16 @@ export async function getAllAccommodations(
     page: response.data.page,
   };
 }
+
+export async function getAccommodationById(
+  id: string,
+): Promise<IResponse<IAccommodation>> {
+  const response = await api.get(`/hospedagens/${id}`);
+
+  return {
+    data: response.data,
+    totalPages: response.data.totalPages,
+    size: response.data.size,
+    page: response.data.page,
+  };
+}

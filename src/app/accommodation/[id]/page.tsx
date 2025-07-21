@@ -1,13 +1,13 @@
 import { BackButton } from "@/components/back-button";
-import { getRestaurantById } from "@/services/restaurants";
-import { RestaurantView } from "./components/restaurant";
+import { getAccommodationById } from "@/services/accommodation";
+import { AccommodationView } from "./components/accommodation";
 
 type Params = Promise<{ id: string }>;
 
 export default async function Page(props: { params: Params }) {
   const id = (await props.params).id;
 
-  const restaurant = await getRestaurantById(id);
+  const accommodation = await getAccommodationById(id);
 
   return (
     <main className="p-4">
@@ -15,7 +15,7 @@ export default async function Page(props: { params: Params }) {
         <BackButton />
       </div>
 
-      <RestaurantView restaurant={restaurant.data} />
+      <AccommodationView accommodation={accommodation.data} />
     </main>
   );
 }

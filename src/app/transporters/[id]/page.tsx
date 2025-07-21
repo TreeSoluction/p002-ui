@@ -3,12 +3,8 @@ import { getTransporterById } from "@/services/transporters";
 import { TransportView } from "./components/transport";
 
 type Params = Promise<{ id: string }>;
-type SearchParams = Promise<{ id: string }>;
 
-export default async function Page(props: {
-  params: Params;
-  searchParams: SearchParams;
-}) {
+export default async function Page(props: { params: Params }) {
   const id = (await props.params).id;
 
   const transport = await getTransporterById(id);
