@@ -21,7 +21,7 @@ export function Banner({
   useEffect(() => {
     (async () => {
       const carouselImages = (await getAllCarouselImages()).data.map(
-        (image) => image.imagem,
+        (image) => image.imagem || "/logo.png",
       );
 
       setCarouselImages(carouselImages);

@@ -24,7 +24,7 @@ export function CityCard({ city, size }: CityCardProps) {
         }`}
       >
         <Image
-          src={city.imagem}
+          src={city.imagem || "/logo.png"}
           alt={city.nome}
           fill
           className="object-cover"

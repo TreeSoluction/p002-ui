@@ -50,7 +50,7 @@ export default function AccommodationCard({
       <div className="sm:hidden">
         <div className="flex items-center gap-3 p-4 pb-4">
           <Image
-            src={accommodation.imagem}
+            src={accommodation.imagem || "/logo.png"}
             alt={accommodation.nome}
             width={40}
             height={40}
@@ -68,7 +68,7 @@ export default function AccommodationCard({
             <>
               <div className="w-[200px] flex-shrink-0 flex gap-4 p-6">
                 <Image
-                  src={accommodation.imagem}
+                  src={accommodation.imagem || "/logo.png"}
                   alt={accommodation.nome}
                   width={60}
                   height={60}
@@ -121,7 +121,7 @@ export default function AccommodationCard({
           ) : (
             <div className="flex gap-4 p-6 w-full">
               <Image
-                src={accommodation.imagem}
+                src={accommodation.imagem || "/logo.png"}
                 alt={accommodation.nome}
                 width={60}
                 height={60}
@@ -142,7 +142,7 @@ export default function AccommodationCard({
           <>
             <div className="w-[200px] flex-shrink-0 flex gap-4 p-6">
               <Image
-                src={accommodation.imagem}
+                src={accommodation.imagem || "/logo.png"}
                 alt={accommodation.nome}
                 width={60}
                 height={60}
@@ -195,7 +195,7 @@ export default function AccommodationCard({
         ) : (
           <div className="flex gap-4 p-6 w-full">
             <Image
-              src={accommodation.imagem}
+              src={accommodation.imagem || "/logo.png"}
               alt={accommodation.nome}
               width={60}
               height={60}

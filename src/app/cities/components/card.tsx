@@ -14,7 +14,7 @@ export default function CityCard({ city }: CityCardProps) {
     >
       <div className="relative w-full h-32 sm:h-40 md:h-48">
         <Image
-          src={city.imagem}
+          src={city.imagem || "/logo.png"}
           alt={city.nome}
           fill
           className="object-cover"

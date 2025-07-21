@@ -22,3 +22,14 @@ export async function getAllKiosks(
     page: response.data.page,
   };
 }
+
+export async function getKioskById(id: string): Promise<IResponse<IKiosk>> {
+  const response = await api.get(`/quiosques/${id}`);
+
+  return {
+    data: response.data,
+    totalPages: response.data.totalPages,
+    size: response.data.size,
+    page: response.data.page,
+  };
+}

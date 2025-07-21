@@ -1,12 +1,12 @@
 "use client";
 
-import { Card } from "@/components/card";
 import { ICity } from "@/interfaces/ICity";
 import { IKnitwear } from "@/interfaces/IKnitwear";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllKnitwears } from "@/services/knitwear";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import KnitwearCard from "./card";
 
 interface KnitwearProps {
   initialData: IResponse<IKnitwear[]>;
@@ -34,7 +34,7 @@ export default function Knitwear({ initialData, city }: KnitwearProps) {
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
             {knitwearData.data.map((item) => (
-              <Card key={item.id} data={item} />
+              <KnitwearCard key={item.id} knitwear={item} />
             ))}
           </ul>
 

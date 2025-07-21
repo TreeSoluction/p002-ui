@@ -24,9 +24,9 @@ export default async function Page(props: {
           {calendar.titulo}
         </h1>
 
-        {calendar.imagem ? (
+        {calendar.imagem || "/logo.png" ? (
           <img
-            src={calendar.imagem}
+            src={calendar.imagem || "/logo.png"}
             alt={calendar.titulo}
             className="max-w-full h-auto rounded-lg shadow-md"
           />

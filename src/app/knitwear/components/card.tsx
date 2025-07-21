@@ -1,16 +1,16 @@
 "use client";
 
-import { ITransport } from "@/interfaces/ITransport";
+import { IKnitwear } from "@/interfaces/IKnitwear";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
-interface TransportCardProps {
-  transport: ITransport;
+interface KnitwearCardProps {
+  knitwear: IKnitwear;
 }
 
-export default function TransportCard({ transport }: TransportCardProps) {
+export default function KnitwearCard({ knitwear }: KnitwearCardProps) {
   const router = useRouter();
   const scrollRefMobile = useRef<HTMLDivElement>(null);
   const scrollRefDesktop = useRef<HTMLDivElement>(null);
@@ -34,10 +34,10 @@ export default function TransportCard({ transport }: TransportCardProps) {
   };
 
   const handleBuyClick = () => {
-    router.push(`/transporters/${transport.id}`);
+    router.push(`/knitwear/${knitwear.id}`);
   };
 
-  const hasProducts = transport.produtos && transport.produtos.length > 0;
+  const hasProducts = knitwear.produtos && knitwear.produtos.length > 0;
 
   return (
     <div
@@ -47,15 +47,15 @@ export default function TransportCard({ transport }: TransportCardProps) {
       <div className="sm:hidden">
         <div className="flex items-center gap-3 p-4 pb-4">
           <Image
-            src={transport.imagem || "/logo.png"}
-            alt={transport.nome}
+            src={knitwear.imagem || "/logo.png"}
+            alt={knitwear.nome}
             width={40}
             height={40}
             className="object-contain rounded-md flex-shrink-0"
           />
           <div className="flex-1 min-w-0">
             <h2 className="font-bold text-sm leading-tight break-words">
-              {transport.nome}
+              {knitwear.nome}
             </h2>
           </div>
         </div>
@@ -65,15 +65,15 @@ export default function TransportCard({ transport }: TransportCardProps) {
             <>
               <div className="w-[200px] flex-shrink-0 flex gap-4 p-6">
                 <Image
-                  src={transport.imagem || "/logo.png"}
-                  alt={transport.nome}
+                  src={knitwear.imagem || "/logo.png"}
+                  alt={knitwear.nome}
                   width={60}
                   height={60}
                   className="object-contain rounded-md flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
                   <h2 className="font-bold text-base leading-tight break-words">
-                    {transport.nome}
+                    {knitwear.nome}
                   </h2>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default function TransportCard({ transport }: TransportCardProps) {
                   onClick={(e) => e.stopPropagation()}
                   className="flex-1 flex gap-3 overflow-x-auto scrollbar-hide pb-2 scroll-smooth min-w-0"
                 >
-                  {transport.produtos.map((produto, index) => (
+                  {knitwear.produtos.map((produto, index) => (
                     <div
                       key={index}
                       className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
@@ -118,15 +118,15 @@ export default function TransportCard({ transport }: TransportCardProps) {
           ) : (
             <div className="flex gap-4 p-6 w-full">
               <Image
-                src={transport.imagem || "/logo.png"}
-                alt={transport.nome}
+                src={knitwear.imagem || "/logo.png"}
+                alt={knitwear.nome}
                 width={60}
                 height={60}
                 className="object-contain rounded-md flex-shrink-0"
               />
               <div className="flex-1 min-w-0">
                 <h2 className="font-bold text-base leading-tight break-words">
-                  {transport.nome}
+                  {knitwear.nome}
                 </h2>
               </div>
             </div>
@@ -139,15 +139,15 @@ export default function TransportCard({ transport }: TransportCardProps) {
           <>
             <div className="w-[200px] flex-shrink-0 flex gap-4 p-6">
               <Image
-                src={transport.imagem || "/logo.png"}
-                alt={transport.nome}
+                src={knitwear.imagem || "/logo.png"}
+                alt={knitwear.nome}
                 width={60}
                 height={60}
                 className="object-contain rounded-md flex-shrink-0"
               />
               <div className="flex-1 min-w-0">
                 <h2 className="font-bold text-base leading-tight break-words">
-                  {transport.nome}
+                  {knitwear.nome}
                 </h2>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function TransportCard({ transport }: TransportCardProps) {
                 onClick={(e) => e.stopPropagation()}
                 className="flex-1 flex gap-3 overflow-x-auto scrollbar-hide pb-2 scroll-smooth min-w-0"
               >
-                {transport.produtos.map((produto, index) => (
+                {knitwear.produtos.map((produto, index) => (
                   <div
                     key={index}
                     className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
@@ -192,15 +192,15 @@ export default function TransportCard({ transport }: TransportCardProps) {
         ) : (
           <div className="flex gap-4 p-6 w-full">
             <Image
-              src={transport.imagem || "/logo.png"}
-              alt={transport.nome}
+              src={knitwear.imagem || "/logo.png"}
+              alt={knitwear.nome}
               width={60}
               height={60}
               className="object-contain rounded-md flex-shrink-0"
             />
             <div className="flex-1 min-w-0">
               <h2 className="font-bold text-base leading-tight break-words">
-                {transport.nome}
+                {knitwear.nome}
               </h2>
             </div>
           </div>

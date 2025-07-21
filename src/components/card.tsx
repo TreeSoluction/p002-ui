@@ -18,7 +18,7 @@ export function Card({ data }: IFreetterCardProps) {
     <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-xl p-4 gap-4 w-full max-w-4xl shadow-sm">
       <div className="w-24 h-24 min-w-[96px] relative rounded-xl overflow-hidden bg-white">
         <Image
-          src={data.imagem}
+          src={data.imagem || "/logo.png"}
           alt={data.nome}
           fill
           className="object-contain"

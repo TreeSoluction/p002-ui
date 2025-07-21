@@ -101,7 +101,7 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
                 <div className="relative w-full h-40 rounded-3xl overflow-hidden shadow-lg bg-white p-2">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
                     <Image
-                      src={city.imagem}
+                      src={city.imagem || "/logo.png"}
                       alt={city.nome}
                       fill
                       className="object-cover"

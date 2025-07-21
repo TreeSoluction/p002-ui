@@ -22,3 +22,16 @@ export async function getAllKnitwears(
     page: response.data.page,
   };
 }
+
+export async function getKnitwearById(
+  id: string,
+): Promise<IResponse<IKnitwear>> {
+  const response = await api.get(`/malharias/${id}`);
+
+  return {
+    data: response.data,
+    totalPages: response.data.totalPages,
+    size: response.data.size,
+    page: response.data.page,
+  };
+}

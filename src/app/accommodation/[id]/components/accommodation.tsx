@@ -35,7 +35,7 @@ export function AccommodationView({ accommodation }: AccommodationViewProps) {
           <div className="flex items-start gap-4">
             <div className="flex flex-col items-center">
               <Image
-                src={accommodation.imagem}
+                src={accommodation.imagem || "/logo.png"}
                 alt={accommodation.nome}
                 width={60}
                 height={60}

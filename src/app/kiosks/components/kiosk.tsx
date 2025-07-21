@@ -1,12 +1,12 @@
 "use client";
 
-import { Card } from "@/components/card";
 import { ICity } from "@/interfaces/ICity";
 import { IKiosk } from "@/interfaces/IKiosk";
 import { IResponse } from "@/interfaces/IResponse";
 import { getAllKiosks } from "@/services/kiosk";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import KioskCard from "./card";
 
 interface KioskProps {
   initialData: IResponse<IKiosk[]>;
@@ -34,7 +34,7 @@ export default function Kiosk({ initialData, city }: KioskProps) {
         <>
           <ul className="max-w-3xl mx-auto space-y-4">
             {kioskData.data.map((item) => (
-              <Card key={item.id} data={item} />
+              <KioskCard key={item.id} kiosk={item} />
             ))}
           </ul>
 

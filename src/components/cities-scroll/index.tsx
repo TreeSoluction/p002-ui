@@ -100,7 +100,7 @@ export function CitiesCarousel({
     >
       <div className="relative w-[70px] h-[70px] md:w-[120px] md:h-[120px] rounded-xl overflow-hidden grayscale">
         <Image
-          src={city.imagem}
+          src={city.imagem || "/logo.png"}
           alt={city.nome}
           fill
           className="object-cover"
@@ -144,7 +144,7 @@ export function CitiesCarousel({
                 >
                   <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
                     <Image
-                      src={getCity(0).imagem}
+                      src={getCity(0).imagem || "/logo.png"}
                       alt={getCity(0).nome}
                       fill
                       className="object-cover"
@@ -158,7 +158,7 @@ export function CitiesCarousel({
                 <div className="flex flex-col items-center gap-2 md:gap-4 h-full hover:scale-105 transition-transform duration-200">
                   <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
                     <Image
-                      src={getCity(0).imagem}
+                      src={getCity(0).imagem || "/logo.png"}
                       alt={getCity(0).nome}
                       fill
                       className="object-cover"

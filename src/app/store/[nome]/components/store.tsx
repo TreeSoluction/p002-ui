@@ -35,7 +35,7 @@ export function StoreView({ store }: StoreViewProps) {
           <div className="flex items-start gap-4">
             <div className="flex flex-col items-center">
               <Image
-                src={store.imagem}
+                src={store.imagem || "/logo.png"}
                 alt={store.nome}
                 width={60}
                 height={60}

@@ -41,7 +41,7 @@ export default function StoreCard({ store }: StoreCardProps) {
       <div className="sm:hidden">
         <div className="flex items-center gap-3 p-4 pb-12">
           <Image
-            src={store.imagem}
+            src={store.imagem || "/logo.png"}
             alt={store.nome}
             width={40}
             height={40}
@@ -92,7 +92,7 @@ export default function StoreCard({ store }: StoreCardProps) {
       <div className="hidden sm:flex items-center">
         <div className="w-[200px] flex-shrink-0 flex gap-4 p-6">
           <Image
-            src={store.imagem}
+            src={store.imagem || "/logo.png"}
             alt={store.nome}
             width={60}
             height={60}
