@@ -24,12 +24,12 @@ export async function getAllTransporters(
 }
 
 export async function getTransporterById(
-  id: number,
+  id: string,
 ): Promise<IResponse<ITransport>> {
   const response = await api.get(`/transportadoras/${id}`);
 
   return {
-    data: response.data.data,
+    data: response.data,
     totalPages: response.data.totalPages,
     size: response.data.size,
     page: response.data.page,

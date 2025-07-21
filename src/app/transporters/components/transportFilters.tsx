@@ -47,7 +47,7 @@ export default function TransportWithCityFilter({
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === "") {
-      setSelectedCityId(undefined); // Limpa o filtro de cidade
+      setSelectedCityId(undefined);
     } else {
       const selected = citiesData?.data.find((city) => city.nome === value);
       if (selected && selected.id.toString() !== selectedCityId) {

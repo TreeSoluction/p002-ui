@@ -14,12 +14,23 @@ interface StoreViewProps {
 export function StoreView({ store }: StoreViewProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const hasInstagram = !!store.instagram?.trim();
-  const hasWhatsapp = !!store.whatsapp?.trim();
+  const hasInstagram =
+    !!store.instagram?.trim() &&
+    store.instagram.trim().toUpperCase() !== "SEM_INSTAGRAM";
+
+  const hasWhatsapp =
+    !!store.whatsapp?.trim() &&
+    store.whatsapp.trim().toUpperCase() !== "SEM_WHATSAPP";
+
+  const instagramUsername = store.instagram
+    ?.replace("https://instagram.com/", "")
+    .replace("https://www.instagram.com/", "")
+    .replace("@", "")
+    .trim();
 
   return (
     <>
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="w-full bg-white rounded-xl shadow-md overflow-hidden">
         <div className="flex items-center justify-between p-4 rounded-lg bg-gray-100">
           <div className="flex items-start gap-4">
             <div className="flex flex-col items-center">
@@ -41,14 +52,17 @@ export function StoreView({ store }: StoreViewProps) {
           </div>
 
           <div className="flex flex-col items-center gap-2">
-            {hasInstagram && (
+            {hasInstagram && instagramUsername && (
               <Link
-                href={store.instagram}
+                href={`https://instagram.com/${instagramUsername}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gray-200 rounded-md p-2 hover:bg-gray-300"
+                className="w-[120px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
               >
                 <FaInstagram className="text-purple-500 text-xl" />
+                <span className="text-[10px] text-gray-700 mt-1 truncate w-full text-center">
+                  @{instagramUsername}
+                </span>
               </Link>
             )}
 
@@ -57,10 +71,10 @@ export function StoreView({ store }: StoreViewProps) {
                 href={`https://wa.me/${store.whatsapp.replace(/\D/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
+                className="w-[120px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
               >
                 <FaWhatsapp className="text-green-500 text-xl" />
-                <span className="text-[10px] text-gray-700 mt-1 break-words text-center">
+                <span className="text-[10px] text-gray-700 mt-1 truncate w-full text-center">
                   {store.whatsapp}
                 </span>
               </Link>
@@ -68,7 +82,7 @@ export function StoreView({ store }: StoreViewProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 p-4">
+        <div className="flex flex-wrap gap-2 p-4 justify-center">
           {store.produtos && store.produtos.length > 0 ? (
             store.produtos.map((base64, index) => (
               <Image
@@ -77,12 +91,12 @@ export function StoreView({ store }: StoreViewProps) {
                 alt={`Produto ${index + 1}`}
                 width={300}
                 height={300}
-                className="rounded-md object-cover cursor-pointer"
+                className="rounded-md object-cover cursor-pointer flex-shrink-0 w-[48%] sm:w-[30%] md:w-[23%]"
                 onClick={() => setSelectedImage(base64)}
               />
             ))
           ) : (
-            <p className="col-span-2 text-center text-gray-500">
+            <p className="w-full text-center text-gray-500">
               Nenhum produto disponível.
             </p>
           )}

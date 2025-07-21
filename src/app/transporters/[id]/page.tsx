@@ -2,16 +2,16 @@ import { BackButton } from "@/components/back-button";
 import { getTransporterById } from "@/services/transporters";
 import { TransportView } from "./components/transport";
 
-type Params = Promise<{ transport: string }>;
+type Params = Promise<{ id: string }>;
 type SearchParams = Promise<{ id: string }>;
 
 export default async function Page(props: {
   params: Params;
   searchParams: SearchParams;
 }) {
-  const id = (await props.searchParams).id;
+  const id = (await props.params).id;
 
-  const transport = await getTransporterById(+id);
+  const transport = await getTransporterById(id);
 
   return (
     <main className="p-4">

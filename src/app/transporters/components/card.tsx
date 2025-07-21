@@ -32,12 +32,14 @@ export default function TransportCard({ transport }: TransportCardProps) {
   };
 
   const handleBuyClick = () => {
-    const transportNameEncoded = encodeURIComponent(transport.nome);
-    router.push(`/transport/${transportNameEncoded}?id=${transport.id}`);
+    router.push(`/transporters/${transport.id}`);
   };
 
   return (
-    <div className="relative bg-white rounded-2xl shadow-md overflow-hidden min-w-0">
+    <div
+      className="relative bg-white rounded-2xl shadow-md overflow-hidden min-w-0"
+      onClick={handleBuyClick}
+    >
       <div className="sm:hidden">
         <div className="flex items-center gap-3 p-4 pb-12">
           <Image
@@ -140,13 +142,6 @@ export default function TransportCard({ transport }: TransportCardProps) {
           </button>
         </div>
       </div>
-
-      <button
-        onClick={handleBuyClick}
-        className="absolute bottom-2 left-4 bg-green-500 hover:bg-green-600 px-3 py-1.5 text-white rounded text-xs sm:text-sm font-medium transition-colors"
-      >
-        Compre Agora
-      </button>
 
       <style jsx global>{`
         .scrollbar-hide {
