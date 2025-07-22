@@ -10,7 +10,7 @@ import KnitwearCard from "./card";
 
 interface KnitwearProps {
   initialData: IResponse<IKnitwear[]>;
-  city: ICity;
+  city?: ICity;
 }
 
 export default function Knitwear({ initialData, city }: KnitwearProps) {

@@ -10,7 +10,7 @@ import { useState } from "react";
 
 interface FreetterProps {
   initialData: IResponse<IFreetter[]>;
-  city: ICity;
+  city?: ICity;
 }
 
 export default function Freetter({ initialData, city }: FreetterProps) {
@@ -19,7 +19,7 @@ export default function Freetter({ initialData, city }: FreetterProps) {
 
   const { data, isLoading } = useQuery<IResponse<IFreetter[]>>({
     queryKey: ["fretter", page],
-    queryFn: () => getAllFreetters(size, page, city.nome),
+    queryFn: () => getAllFreetters(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });

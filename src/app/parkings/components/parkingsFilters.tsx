@@ -15,14 +15,11 @@ interface ParkingWithCityFilterProps {
 }
 
 export default function ParkingWithCityFilter({
-  city: initialCity,
+  city,
 }: ParkingWithCityFilterProps) {
-  const [selectedCityId] = useState<string | undefined>(
-    initialCity?.id.toString(),
+  const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
+    city?.id?.toString() ?? undefined,
   );
-  const [selectedCityIdPending, setSelectedCityIdPending] = useState<
-    string | undefined
-  >(undefined);
   const [page, setPage] = useState(0);
   const size = 10;
 
@@ -33,30 +30,18 @@ export default function ParkingWithCityFilter({
   });
 
   const selectedCity = useMemo(() => {
-    const id = selectedCityIdPending ?? selectedCityId;
-    return citiesData?.data.find((city) => city.id.toString() === id);
-  }, [selectedCityId, selectedCityIdPending, citiesData]);
+    return citiesData?.data.find((c) => c.id.toString() === selectedCityId);
+  }, [selectedCityId, citiesData]);
 
-  const { data: ParkingersData, isLoading } = useQuery<IResponse<IParking[]>>({
-    queryKey: ["Parkinges", page, selectedCity?.nome],
-    queryFn: () => getAllParkings(size, page, selectedCity?.nome),
-    enabled: !!selectedCity,
+  const { data: parkingsData, isLoading } = useQuery<IResponse<IParking[]>>({
+    queryKey: ["parkings", page, selectedCityId ?? "all"],
+    queryFn: () => getAllParkings(size, page, selectedCity?.nome ?? undefined),
     staleTime: 1000 * 60,
   });
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = citiesData?.data.find(
-      (city) => city.nome === e.target.value,
-    );
-    if (!selected) return;
-
-    if (
-      selected.id.toString() === selectedCityId ||
-      selected.id.toString() === selectedCityIdPending
-    )
-      return;
-
-    setSelectedCityIdPending(selected.id.toString());
+    const newId = e.target.value === "" ? undefined : e.target.value;
+    setSelectedCityId(newId);
     setPage(0);
   };
 
@@ -76,23 +61,23 @@ export default function ParkingWithCityFilter({
         <select
           id="city-select"
           onChange={handleSelectChange}
-          value={selectedCity?.nome ?? ""}
+          value={selectedCityId ?? ""}
           className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
         >
-          <option value="">Selecione uma cidade</option>
+          <option value="">Todas as cidades</option>
           {citiesData?.data.map((city) => (
-            <option key={city.id} value={city.nome}>
+            <option key={city.id} value={city.id.toString()}>
               {city.nome}
             </option>
           ))}
         </select>
       </div>
 
-      {selectedCity && ParkingersData && (
-        <Parking initialData={ParkingersData} city={selectedCity} />
+      {parkingsData && (
+        <Parking initialData={parkingsData} city={selectedCity} />
       )}
 
-      {selectedCity && isLoading && (
+      {isLoading && (
         <p className="text-center text-gray-600">
           Carregando Estacionamentos...
         </p>

@@ -10,7 +10,7 @@ import { useState } from "react";
 
 interface ParkingsProps {
   initialData: IResponse<IParking[]>;
-  city: ICity;
+  city?: ICity;
 }
 
 export default function Parkings({ initialData, city }: ParkingsProps) {

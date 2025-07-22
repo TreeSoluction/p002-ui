@@ -17,12 +17,9 @@ interface FreetterWithCityFilterProps {
 export default function FreetterWithCityFilter({
   city: initialCity,
 }: FreetterWithCityFilterProps) {
-  const [selectedCityId] = useState<string | undefined>(
-    initialCity?.id.toString(),
+  const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
+    initialCity?.id?.toString(),
   );
-  const [selectedCityIdPending, setSelectedCityIdPending] = useState<
-    string | undefined
-  >(undefined);
   const [page, setPage] = useState(0);
   const size = 10;
 
@@ -33,32 +30,30 @@ export default function FreetterWithCityFilter({
   });
 
   const selectedCity = useMemo(() => {
-    const id = selectedCityIdPending ?? selectedCityId;
-    return citiesData?.data.find((city) => city.id.toString() === id);
-  }, [selectedCityId, selectedCityIdPending, citiesData]);
+    if (!selectedCityId) return undefined;
+    return citiesData?.data.find(
+      (city) => city.id.toString() === selectedCityId,
+    );
+  }, [selectedCityId, citiesData]);
 
-  const { data: FreetterersData, isLoading } = useQuery<IResponse<IFreetter[]>>(
+  const { data: freetterersData, isLoading } = useQuery<IResponse<IFreetter[]>>(
     {
-      queryKey: ["Freetteres", page, selectedCity?.nome],
+      queryKey: ["freetters", page, selectedCity?.nome ?? "all"],
       queryFn: () => getAllFreetters(size, page, selectedCity?.nome),
-      enabled: !!selectedCity,
       staleTime: 1000 * 60,
     },
   );
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = citiesData?.data.find(
-      (city) => city.nome === e.target.value,
-    );
-    if (!selected) return;
-
-    if (
-      selected.id.toString() === selectedCityId ||
-      selected.id.toString() === selectedCityIdPending
-    )
-      return;
-
-    setSelectedCityIdPending(selected.id.toString());
+    const value = e.target.value;
+    if (value === "") {
+      setSelectedCityId(undefined);
+    } else {
+      const selected = citiesData?.data.find((city) => city.nome === value);
+      if (selected && selected.id.toString() !== selectedCityId) {
+        setSelectedCityId(selected.id.toString());
+      }
+    }
     setPage(0);
   };
 
@@ -81,7 +76,7 @@ export default function FreetterWithCityFilter({
           value={selectedCity?.nome ?? ""}
           className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
         >
-          <option value="">Selecione uma cidade</option>
+          <option value="">Todas as cidades</option>
           {citiesData?.data.map((city) => (
             <option key={city.id} value={city.nome}>
               {city.nome}
@@ -90,11 +85,11 @@ export default function FreetterWithCityFilter({
         </select>
       </div>
 
-      {selectedCity && FreetterersData && (
-        <Freetter initialData={FreetterersData} city={selectedCity} />
+      {freetterersData && (
+        <Freetter initialData={freetterersData} city={selectedCity} />
       )}
 
-      {selectedCity && isLoading && (
+      {isLoading && (
         <p className="text-center text-gray-600">Carregando Freteiros...</p>
       )}
     </div>

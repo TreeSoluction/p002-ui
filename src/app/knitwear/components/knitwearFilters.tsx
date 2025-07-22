@@ -17,12 +17,9 @@ interface KnitwearWithCityFilterProps {
 export default function KnitwearWithCityFilter({
   city: initialCity,
 }: KnitwearWithCityFilterProps) {
-  const [selectedCityId] = useState<string | undefined>(
-    initialCity?.id.toString(),
+  const [selectedCityId, setSelectedCityId] = useState<string | undefined>(
+    initialCity?.id?.toString(),
   );
-  const [selectedCityIdPending, setSelectedCityIdPending] = useState<
-    string | undefined
-  >(undefined);
   const [page, setPage] = useState(0);
   const size = 10;
 
@@ -33,32 +30,30 @@ export default function KnitwearWithCityFilter({
   });
 
   const selectedCity = useMemo(() => {
-    const id = selectedCityIdPending ?? selectedCityId;
-    return citiesData?.data.find((city) => city.id.toString() === id);
-  }, [selectedCityId, selectedCityIdPending, citiesData]);
+    if (!selectedCityId) return undefined;
+    return citiesData?.data.find(
+      (city) => city.id.toString() === selectedCityId,
+    );
+  }, [selectedCityId, citiesData]);
 
-  const { data: KnitwearersData, isLoading } = useQuery<IResponse<IKnitwear[]>>(
+  const { data: knitwearersData, isLoading } = useQuery<IResponse<IKnitwear[]>>(
     {
-      queryKey: ["Knitweares", page, selectedCity?.nome],
+      queryKey: ["knitwears", page, selectedCity?.nome ?? "all"],
       queryFn: () => getAllKnitwears(size, page, selectedCity?.nome),
-      enabled: !!selectedCity,
       staleTime: 1000 * 60,
     },
   );
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = citiesData?.data.find(
-      (city) => city.nome === e.target.value,
-    );
-    if (!selected) return;
-
-    if (
-      selected.id.toString() === selectedCityId ||
-      selected.id.toString() === selectedCityIdPending
-    )
-      return;
-
-    setSelectedCityIdPending(selected.id.toString());
+    const value = e.target.value;
+    if (value === "") {
+      setSelectedCityId(undefined);
+    } else {
+      const selected = citiesData?.data.find((city) => city.nome === value);
+      if (selected && selected.id.toString() !== selectedCityId) {
+        setSelectedCityId(selected.id.toString());
+      }
+    }
     setPage(0);
   };
 
@@ -81,7 +76,7 @@ export default function KnitwearWithCityFilter({
           value={selectedCity?.nome ?? ""}
           className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
         >
-          <option value="">Selecione uma cidade</option>
+          <option value="">Todas as cidades</option>
           {citiesData?.data.map((city) => (
             <option key={city.id} value={city.nome}>
               {city.nome}
@@ -90,11 +85,11 @@ export default function KnitwearWithCityFilter({
         </select>
       </div>
 
-      {selectedCity && KnitwearersData && (
-        <Knitwear initialData={KnitwearersData} city={selectedCity} />
+      {knitwearersData && (
+        <Knitwear initialData={knitwearersData} city={selectedCity} />
       )}
 
-      {selectedCity && isLoading && (
+      {isLoading && (
         <p className="text-center text-gray-600">Carregando Malharias...</p>
       )}
     </div>

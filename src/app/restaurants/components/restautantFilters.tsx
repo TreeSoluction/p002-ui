@@ -18,7 +18,7 @@ export default function RestaurantWithCityFilter({
   city: initialCity,
 }: RestaurantWithCityFilterProps) {
   const [selectedCityId] = useState<string | undefined>(
-    initialCity?.id.toString(),
+    initialCity?.id?.toString(),
   );
   const [selectedCityIdPending, setSelectedCityIdPending] = useState<
     string | undefined
@@ -40,15 +40,22 @@ export default function RestaurantWithCityFilter({
   const { data: RestaurantersData, isLoading } = useQuery<
     IResponse<IRestaurant[]>
   >({
-    queryKey: ["Restaurantes", page, selectedCity?.nome],
+    queryKey: ["Restaurantes", page, selectedCity?.nome ?? "all"],
     queryFn: () => getAllRestaurants(size, page, selectedCity?.nome),
-    enabled: !!selectedCity,
     staleTime: 1000 * 60,
   });
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedNome = e.target.value;
+
+    if (!selectedNome) {
+      setSelectedCityIdPending(undefined);
+      setPage(0);
+      return;
+    }
+
     const selected = citiesData?.data.find(
-      (city) => city.nome === e.target.value,
+      (city) => city.nome === selectedNome,
     );
     if (!selected) return;
 
@@ -81,7 +88,7 @@ export default function RestaurantWithCityFilter({
           value={selectedCity?.nome ?? ""}
           className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
         >
-          <option value="">Selecione uma cidade</option>
+          <option value="">Todas as cidades</option>
           {citiesData?.data.map((city) => (
             <option key={city.id} value={city.nome}>
               {city.nome}
@@ -90,11 +97,11 @@ export default function RestaurantWithCityFilter({
         </select>
       </div>
 
-      {selectedCity && RestaurantersData && (
+      {RestaurantersData && (
         <Restaurant initialData={RestaurantersData} city={selectedCity} />
       )}
 
-      {selectedCity && isLoading && (
+      {isLoading && (
         <p className="text-center text-gray-600">Carregando Restaurantes...</p>
       )}
     </div>

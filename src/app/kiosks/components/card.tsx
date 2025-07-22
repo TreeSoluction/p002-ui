@@ -34,7 +34,7 @@ export default function KioskCard({ kiosk }: KioskCardProps) {
   };
 
   const handleBuyClick = () => {
-    router.push(`/kiosk/${kiosk.id}`);
+    router.push(`/kiosks/${kiosk.id}`);
   };
 
   const hasProducts = kiosk.produtos && kiosk.produtos.length > 0;
