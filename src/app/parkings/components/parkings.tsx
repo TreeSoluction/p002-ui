@@ -18,7 +18,7 @@ export default function Parkings({ initialData, city }: ParkingsProps) {
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IParking[]>>({
-    queryKey: ["parking", page],
+    queryKey: ["parking", page, city],
     queryFn: () => getAllParkings(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,

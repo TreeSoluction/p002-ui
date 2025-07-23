@@ -18,7 +18,7 @@ export default function Freetter({ initialData, city }: FreetterProps) {
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IFreetter[]>>({
-    queryKey: ["fretter", page],
+    queryKey: ["fretter", page, city],
     queryFn: () => getAllFreetters(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,

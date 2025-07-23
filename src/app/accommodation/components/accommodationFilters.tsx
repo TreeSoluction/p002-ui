@@ -46,10 +46,11 @@ export default function AccommodationWithCityFilter({
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
+
     if (value === "") {
       setSelectedCityId(undefined);
     } else {
-      const selected = citiesData?.data.find((city) => city.nome === value);
+      const selected = citiesData?.data.find((city) => city.id === +value);
       if (selected && selected.id.toString() !== selectedCityId) {
         setSelectedCityId(selected.id.toString());
       }
@@ -73,12 +74,12 @@ export default function AccommodationWithCityFilter({
         <select
           id="city-select"
           onChange={handleSelectChange}
-          value={selectedCity?.nome ?? ""}
+          value={selectedCity?.id ?? ""}
           className="w-full border border-gray-300 rounded px-3 py-2 shadow-sm text-sm"
         >
           <option value="">Todas as cidades</option>
           {citiesData?.data.map((city) => (
-            <option key={city.id} value={city.nome}>
+            <option key={city.id} value={city.id}>
               {city.nome}
             </option>
           ))}

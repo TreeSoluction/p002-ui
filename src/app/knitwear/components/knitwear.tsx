@@ -18,7 +18,7 @@ export default function Knitwear({ initialData, city }: KnitwearProps) {
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IKnitwear[]>>({
-    queryKey: ["knitwear", page],
+    queryKey: ["knitwear", page, city],
     queryFn: () => getAllKnitwears(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,

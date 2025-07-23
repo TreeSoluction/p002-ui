@@ -21,7 +21,7 @@ export default function Accommodation({
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IAccommodation[]>>({
-    queryKey: ["accomodation", page],
+    queryKey: ["accomodation", page, city],
     queryFn: () => getAllAccommodations(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,

@@ -18,7 +18,7 @@ export default function Kiosk({ initialData, city }: KioskProps) {
   const size = initialData.size ?? 10;
 
   const { data, isLoading } = useQuery<IResponse<IKiosk[]>>({
-    queryKey: ["kiosk", page],
+    queryKey: ["kiosk", page, city],
     queryFn: () => getAllKiosks(size, page, city?.nome),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
