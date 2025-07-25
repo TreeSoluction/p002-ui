@@ -27,7 +27,7 @@ export default function HeaderMenu() {
       />
 
       <nav
-        className={`fixed top-0 left-0 z-50 h-full w-64 transform rounded-r-lg bg-white p-6 text-black shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 z-50 h-full w-72 transform rounded-r-lg bg-white p-6 text-black shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="mb-4 flex items-center justify-between">
           <span className="text-lg font-semibold">Menu</span>
@@ -51,7 +51,13 @@ export default function HeaderMenu() {
             <Link href="/sac">SAC</Link>
           </li>
           <li>
+            <Link href="/faq"> FAQ - Perguntas Frequentes</Link>
+          </li>
+          <li>
             <Link href="/terms-of-use">Termos de Uso</Link>
+          </li>
+          <li>
+            <Link href="/policy-and-privacy">Política de Privacidade</Link>
           </li>
         </ul>
       </nav>

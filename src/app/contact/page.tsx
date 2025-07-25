@@ -2,7 +2,7 @@ import Link from "@/components/link";
 import { MailIcon, PhoneIcon } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function ContactPage() {
+export default function Page() {
   return (
     <div className="max-w-4xl mx-auto px-6 sm:px-12 py-12 text-gray-800">
       <div className="flex flex-col items-center gap-2 sm:gap-3 mb-10 text-center">
