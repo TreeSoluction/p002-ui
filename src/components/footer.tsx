@@ -106,7 +106,7 @@ export function Footer() {
               </div>
             </LinkNext>
             <LinkNext
-              href="https://play.google.com/store/apps/details?id=com.feirasdepernambuco&pcampaignid=web_share"
+              href="https://apps.apple.com/br/app/feiras-de-pernambuco/id6748486143"
               className="shrink-0"
               target="_blank"
             >
