@@ -1,8 +1,7 @@
 import { BackButton } from "@/components/back-button";
 import { FeaturesScroll } from "@/components/feature-scroll";
-import { getAllCities } from "@/services/cities";
+import { getAllCities, getCityById } from "@/services/cities";
 import { getAllStores } from "@/services/store";
-import { segments } from "@/utils/segments";
 import Store from "./components/stores";
 
 type Params = Promise<{ name: string }>;
@@ -15,14 +14,14 @@ export default async function Page(props: {
   const params = await props.params;
   const searchParams = await props.searchParams;
 
-  const segment = segments.find(
-    (segment) => segment.name === decodeURIComponent(params.name),
-  );
-
   const cities = (await getAllCities(10000, 0)).data;
+  const cityId = searchParams.cityId;
 
-  const city = cities.find(
-    (city) => city.id.toString() === searchParams.cityId,
+  const cityResponse = await getCityById(cityId);
+  const city = cityResponse.data;
+
+  const segment = city.categorias?.find(
+    (cat) => cat.nome === decodeURIComponent(params.name),
   );
 
   const stores = await getAllStores({
@@ -44,20 +43,20 @@ export default async function Page(props: {
 
   return (
     <>
-      <FeaturesScroll cityId={searchParams.cityId} />
+      <FeaturesScroll cityId={cityId} />
 
       <div className="px-4 mb-2">
         <BackButton />
       </div>
 
       <div className="px-4 mb-4 text-center">
-        <h1 className="text-2xl font-bold text-gray-800">{segment.name}</h1>
+        <h1 className="text-2xl font-bold text-gray-800">{segment.nome}</h1>
       </div>
 
       <Store
         initialData={stores}
         segment={segment}
-        cityId={searchParams.cityId}
+        cityId={cityId}
         cities={cities}
       />
     </>

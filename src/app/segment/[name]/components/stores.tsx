@@ -22,25 +22,25 @@ export default function Store({
   cityId,
   cities,
 }: StoreProps) {
-  const [page, setPage] = useState(initialData.page ?? 0);
+  const [page, setPage] = useState(initialData.page ?? 1);
   const size = initialData.size ?? 10;
 
   const city = cities.find((city) => city.id.toString() === cityId);
 
   const { data, isLoading } = useQuery<IResponse<IStore[]>>({
-    queryKey: [`store${segment.name}-${cityId}`, page],
+    queryKey: [`store${segment.nome}-${cityId}`, page],
     queryFn: () =>
       getAllStores({
         size,
         page,
-        categoria: segment.name,
+        categoria: segment.nome,
         cidade: city?.nome,
       }),
     placeholderData: page === initialData.page ? initialData : undefined,
     staleTime: 1000 * 60,
   });
 
-  const storeData = data ?? { data: [], totalPages: 0, page: 0, size };
+  const storeData = data ?? { data: [], totalPages: 0, page: 1, size };
 
   return (
     <div className="py-8 px-4">
@@ -56,17 +56,17 @@ export default function Store({
 
           <div className="flex justify-center items-center gap-4 mt-6">
             <button
-              onClick={() => setPage((p) => Math.max(p - 1, 0))}
-              disabled={page === 0}
+              onClick={() => setPage((p) => Math.max(p, 0))}
+              disabled={page === 1}
               className="px-4 py-2 bg-blue-800 text-white rounded disabled:opacity-50"
             >
               Anterior
             </button>
-            <span className="text-sm text-gray-600">Página {page + 1}</span>
+            <span className="text-sm text-gray-600">Página {page}</span>
             <button
-              onClick={() => setPage((p) => p + 1)}
+              onClick={() => setPage((p) => p)}
               disabled={
-                page + 1 >= (storeData.totalPages ?? 0) ||
+                page >= (storeData.totalPages ?? 0) ||
                 (storeData.totalPages ?? 0) === 0
               }
               className="px-4 py-2 bg-blue-800 text-white rounded disabled:opacity-50"

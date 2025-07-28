@@ -7,7 +7,7 @@ import Link from "./link";
 
 export function Footer() {
   return (
-    <footer className="bg-[#345d8c] text-white py-10 px-4 sm:px-6">
+    <footer className="bg-[#345d8c] text-white py-10 px-4 mt-4 sm:px-6">
       <div className="max-w-6xl mx-auto grid gap-10 grid-cols-1 md:grid-cols-3">
         <div>
           <h3 className="font-bold mb-3 text-base sm:text-lg">Navegação</h3>

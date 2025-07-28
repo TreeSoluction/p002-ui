@@ -1,4 +1,5 @@
 export interface ISegment {
-  image: string;
-  name: string;
+  id: number;
+  imagem: string;
+  nome: string;
 }

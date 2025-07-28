@@ -1,7 +1,10 @@
+import { ISegment } from "./ISegment";
+
 export interface ICity {
   id: number;
   nome: string;
   imagem: string;
+  categorias: ISegment[];
 }
 
 export interface ICityCategory {

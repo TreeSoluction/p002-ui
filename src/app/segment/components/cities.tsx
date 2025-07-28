@@ -3,6 +3,8 @@
 import { BackButton } from "@/components/back-button";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { ICity } from "@/interfaces/ICity";
+import { getCityById } from "@/services/cities";
+import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import Select from "react-select";
 import { Segments } from "./segments";
@@ -18,7 +20,7 @@ export function SegmentPageClient({
   initialCity,
   initialCityId,
 }: SegmentPageClientProps) {
-  const [currentCityId] = useState<string | undefined>(
+  const [currentCityId, setCurrentCityId] = useState<string | undefined>(
     initialCity?.id.toString() ?? initialCityId,
   );
 
@@ -26,18 +28,39 @@ export function SegmentPageClient({
     string | undefined
   >(undefined);
 
-  const handleInputChange = (option: { city: ICity } | null) => {
-    if (!option) return;
-    const newCityId = option.city.id.toString();
+  const {
+    data: selectedCityData,
+    isFetching,
+    refetch,
+  } = useQuery({
+    queryKey: ["city", selectedCityIdPending],
+    queryFn: () => getCityById(selectedCityIdPending!),
+    enabled: false,
+  });
+
+  const handleInputChange = async (id: number) => {
+    if (!id) return;
+
+    const newCityId = id.toString();
+
     if (newCityId === currentCityId || newCityId === selectedCityIdPending)
       return;
+
     setSelectedCityIdPending(newCityId);
+
+    const result = await refetch();
+
+    if (result.data) {
+      setCurrentCityId(newCityId);
+    }
   };
 
   const selectedCity = useMemo(() => {
-    const id = selectedCityIdPending ?? currentCityId;
-    return cities.find((c) => c.id.toString() === id);
-  }, [selectedCityIdPending, currentCityId, cities]);
+    return (
+      selectedCityData?.data ??
+      cities.find((c) => c.id.toString() === currentCityId)
+    );
+  }, [selectedCityData, cities, currentCityId]);
 
   const options = useMemo(() => {
     return cities.map((city) => ({
@@ -114,9 +137,14 @@ export function SegmentPageClient({
               : null
           }
           options={options}
-          onChange={handleInputChange}
+          onChange={(option) => {
+            if (option) {
+              handleInputChange(option.city.id);
+            }
+          }}
           placeholder="Digite o nome da cidade..."
           isSearchable
+          isLoading={isFetching}
         />
       </div>
 
