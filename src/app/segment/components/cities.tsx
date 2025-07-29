@@ -139,7 +139,7 @@ export function SegmentPageClient({
             }
           }}
           placeholder="Digite o nome da cidade..."
-          isSearchable
+          isSearchable={false}
           isLoading={isFetching || isRefetching}
           isDisabled={isFetching || isRefetching}
         />
