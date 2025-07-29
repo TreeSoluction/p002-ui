@@ -3,8 +3,6 @@
 import { BackButton } from "@/components/back-button";
 import { FeaturesScroll } from "@/components/feature-scroll";
 import { ICity } from "@/interfaces/ICity";
-import { getCityById } from "@/services/cities";
-import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import Select from "react-select";
 import { Segments } from "./segments";
@@ -24,39 +22,9 @@ export function SegmentPageClient({
     initialCity?.id.toString() ?? initialCityId,
   );
 
-  const [selectedCityIdPending, setSelectedCityIdPending] = useState<
-    string | undefined
-  >(undefined);
-
-  const {
-    data: selectedCityData,
-    isFetching,
-    refetch,
-    isRefetching,
-  } = useQuery({
-    queryKey: ["city", selectedCityIdPending],
-    queryFn: () => getCityById(selectedCityIdPending!),
-    enabled: false,
-    retry: false,
-  });
-
-  const handleInputChange = (id: number) => {
-    const newCityId = id.toString();
-
-    if (newCityId === currentCityId) return;
-
-    setCurrentCityId(newCityId);
-    setSelectedCityIdPending(newCityId);
-
-    refetch();
-  };
-
   const selectedCity = useMemo(() => {
-    return (
-      selectedCityData?.data ??
-      cities.find((c) => c.id.toString() === currentCityId)
-    );
-  }, [selectedCityData, cities, currentCityId]);
+    return cities.find((c) => c.id.toString() === currentCityId);
+  }, [cities, currentCityId]);
 
   const options = useMemo(() => {
     return cities.map((city) => ({
@@ -65,6 +33,13 @@ export function SegmentPageClient({
       city,
     }));
   }, [cities]);
+
+  const handleInputChange = (id: number) => {
+    const newCityId = id.toString();
+    if (newCityId !== currentCityId) {
+      setCurrentCityId(newCityId);
+    }
+  };
 
   return (
     <>
@@ -138,14 +113,12 @@ export function SegmentPageClient({
               handleInputChange(option.city.id);
             }
           }}
-          placeholder="Digite o nome da cidade..."
+          placeholder="Selecione uma cidade..."
           isSearchable={false}
-          isLoading={isFetching || isRefetching}
-          isDisabled={isFetching || isRefetching}
         />
       </div>
 
-      <Segments cityId={currentCityId} />
+      {selectedCity && <Segments cityId={currentCityId} />}
     </>
   );
 }
