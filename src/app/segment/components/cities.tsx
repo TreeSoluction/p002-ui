@@ -32,27 +32,23 @@ export function SegmentPageClient({
     data: selectedCityData,
     isFetching,
     refetch,
+    isRefetching,
   } = useQuery({
     queryKey: ["city", selectedCityIdPending],
     queryFn: () => getCityById(selectedCityIdPending!),
     enabled: false,
+    retry: false,
   });
 
-  const handleInputChange = async (id: number) => {
-    if (!id) return;
-
+  const handleInputChange = (id: number) => {
     const newCityId = id.toString();
 
-    if (newCityId === currentCityId || newCityId === selectedCityIdPending)
-      return;
+    if (newCityId === currentCityId) return;
 
+    setCurrentCityId(newCityId);
     setSelectedCityIdPending(newCityId);
 
-    const result = await refetch();
-
-    if (result.data) {
-      setCurrentCityId(newCityId);
-    }
+    refetch();
   };
 
   const selectedCity = useMemo(() => {
@@ -144,7 +140,8 @@ export function SegmentPageClient({
           }}
           placeholder="Digite o nome da cidade..."
           isSearchable
-          isLoading={isFetching}
+          isLoading={isFetching || isRefetching}
+          isDisabled={isFetching || isRefetching}
         />
       </div>
 
