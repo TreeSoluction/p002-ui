@@ -17,7 +17,7 @@ export function Segments({ cityId }: SegmentsProps) {
     queryKey: ["city", cityId],
     queryFn: () => getCityById(cityId!),
     enabled: !!cityId,
-    staleTime: 0,
+    staleTime: 60000,
   });
 
   const city = cityData?.data;
