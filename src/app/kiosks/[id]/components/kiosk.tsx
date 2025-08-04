@@ -68,7 +68,7 @@ export function KioskView({ kiosk }: KioskViewProps) {
 
             {hasWhatsapp && (
               <Link
-                href={`https://wa.me/${kiosk.whatsapp.replace(/\D/g, "")}`}
+                href={`https://wa.me/${kiosk.whatsapp.replace(/\D/g, "")}?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-[120px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"

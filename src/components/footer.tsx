@@ -60,7 +60,7 @@ export function Footer() {
           <p className="text-sm sm:text-base flex items-center gap-2">
             <FaWhatsapp className="text-green-600 w-5 h-5" />
             <a
-              href="https://wa.me/5581991002040"
+              href="https://wa.me/5581991002040?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações."
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"

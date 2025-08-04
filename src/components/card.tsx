@@ -35,7 +35,7 @@ export function Card({ data }: IFreetterCardProps) {
         {data.phone_numbers.map((phone, i) => (
           <Link
             key={i}
-            href={`https://wa.me/55${phone.replace(/\D/g, "")}`}
+            href={`https://wa.me/55${phone.replace(/\D/g, "")}?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações.`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded text-sm"
