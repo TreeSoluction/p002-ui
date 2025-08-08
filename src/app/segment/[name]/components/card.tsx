@@ -12,23 +12,16 @@ interface StoreCardProps {
 
 export default function StoreCard({ store }: StoreCardProps) {
   const router = useRouter();
-  const scrollRefMobile = useRef<HTMLDivElement>(null);
-  const scrollRefDesktop = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scrollLeft = () => {
-    const isMobile = window.innerWidth < 640;
-    const ref = isMobile ? scrollRefMobile : scrollRefDesktop;
-    if (ref.current) {
-      ref.current.scrollBy({ left: -200, behavior: "smooth" });
-    }
+  const scrollLeft = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
   };
 
-  const scrollRight = () => {
-    const isMobile = window.innerWidth < 640;
-    const ref = isMobile ? scrollRefMobile : scrollRefDesktop;
-    if (ref.current) {
-      ref.current.scrollBy({ left: 200, behavior: "smooth" });
-    }
+  const scrollRight = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    scrollRef.current?.scrollBy({ left: 200, behavior: "smooth" });
   };
 
   const handleBuyClick = () => {
@@ -36,87 +29,40 @@ export default function StoreCard({ store }: StoreCardProps) {
     router.push(`/store/${storeNameEncoded}?id=${store.id}`);
   };
 
+  const hasProducts = store.produtos && store.produtos.length > 0;
+
   return (
-    <div className="relative bg-white rounded-2xl shadow-md overflow-hidden min-w-0">
-      <div className="sm:hidden">
-        <div className="flex items-center gap-3 p-4 pb-12">
-          <Image
-            src={store.imagem || "/logo.png"}
-            alt={store.nome}
-            width={40}
-            height={40}
-            className="object-contain rounded-md flex-shrink-0"
-          />
-          <div className="flex-1 min-w-0">
-            <h2 className="font-bold text-sm leading-tight truncate">
-              {store.nome}
-            </h2>
-            <p className="text-xs text-gray-500 truncate">{store.categoria}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 px-4 pb-12">
-          <button
-            onClick={scrollLeft}
-            className="flex-shrink-0 bg-gray-100 hover:bg-gray-200 rounded-full p-1.5 transition-all"
-          >
-            <ChevronLeft size={14} className="text-gray-600" />
-          </button>
-
-          <div
-            ref={scrollRefMobile}
-            className="flex-1 flex gap-2 overflow-x-auto scrollbar-hide pb-2 scroll-smooth min-w-0"
-          >
-            {store.produtos.map((produto, index) => (
-              <div key={index} className="flex-shrink-0 w-14 h-14">
-                <Image
-                  src={produto}
-                  alt={`Produto ${index + 1}`}
-                  width={56}
-                  height={56}
-                  className="rounded-lg object-cover w-full h-full"
-                />
-              </div>
-            ))}
-          </div>
-
-          <button
-            onClick={scrollRight}
-            className="flex-shrink-0 bg-gray-100 hover:bg-gray-200 rounded-full p-1.5 transition-all"
-          >
-            <ChevronRight size={14} className="text-gray-600" />
-          </button>
-        </div>
+    <div
+      className="relative bg-white rounded-2xl shadow-md overflow-hidden min-w-0 cursor-pointer p-4"
+      onClick={handleBuyClick}
+    >
+      <div className="flex items-center gap-4 mb-4">
+        <Image
+          src={store.imagem || "/logo.png"}
+          alt={store.nome}
+          width={60}
+          height={60}
+          className="object-contain rounded-md flex-shrink-0"
+        />
+        <h2 className="font-bold text-lg leading-snug break-words line-clamp-2">
+          {store.nome}
+        </h2>
       </div>
 
-      <div className="hidden sm:flex items-center">
-        <div className="w-[200px] flex-shrink-0 flex gap-4 p-6">
-          <Image
-            src={store.imagem || "/logo.png"}
-            alt={store.nome}
-            width={60}
-            height={60}
-            className="object-contain rounded-md flex-shrink-0"
-          />
-          <div className="flex-1 min-w-0">
-            <h2 className="font-bold text-base leading-tight truncate">
-              {store.nome}
-            </h2>
-            <p className="text-sm text-gray-500 truncate">{store.categoria}</p>
-          </div>
-        </div>
-
-        <div className="flex-1 flex items-center gap-2 min-w-0 p-6">
+      {hasProducts && (
+        <div className="relative mt-2">
           <button
             onClick={scrollLeft}
-            className="flex-shrink-0 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-all"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2 hover:bg-gray-100 transition-all"
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <ChevronLeft size={16} className="text-gray-600" />
           </button>
 
           <div
-            ref={scrollRefDesktop}
-            className="flex-1 flex gap-3 overflow-x-auto scrollbar-hide pb-2 scroll-smooth min-w-0"
+            ref={scrollRef}
+            className="flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth mx-10 pb-2"
+            onClick={(e) => e.stopPropagation()}
           >
             {store.produtos.map((produto, index) => (
               <div
@@ -136,19 +82,25 @@ export default function StoreCard({ store }: StoreCardProps) {
 
           <button
             onClick={scrollRight}
-            className="flex-shrink-0 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-all"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2 hover:bg-gray-100 transition-all"
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <ChevronRight size={16} className="text-gray-600" />
           </button>
         </div>
-      </div>
+      )}
 
-      <button
-        onClick={handleBuyClick}
-        className="absolute bottom-2 left-4 bg-green-500 hover:bg-green-600 px-3 py-1.5 text-white rounded text-xs sm:text-sm font-medium transition-colors"
-      >
-        Compre Agora
-      </button>
+      <div className="mt-4">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleBuyClick();
+          }}
+          className="bg-green-500 hover:bg-green-600 px-3 py-1.5 text-white rounded text-xs sm:text-sm font-medium transition-colors"
+        >
+          Ver Loja
+        </button>
+      </div>
 
       <style jsx global>{`
         .scrollbar-hide {

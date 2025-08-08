@@ -31,55 +31,53 @@ export function AccommodationView({ accommodation }: AccommodationViewProps) {
   return (
     <>
       <div className="w-full bg-white rounded-xl shadow-md overflow-hidden">
-        <div className="flex items-center justify-between p-4 rounded-lg bg-gray-100">
-          <div className="flex items-start gap-4">
-            <div className="flex flex-col items-center">
-              <Image
-                src={accommodation.imagem || "/logo.png"}
-                alt={accommodation.nome}
-                width={60}
-                height={60}
-                className="rounded-md object-cover"
-              />
-              <span className="mt-1 text-sm font-medium text-center text-gray-800">
-                {accommodation.nome}
+        <div className="flex flex-col sm:flex-row gap-4 p-4 bg-gray-100 rounded-lg">
+          <div className="flex flex-col items-center sm:items-start">
+            <Image
+              src={accommodation.imagem || "/logo.png"}
+              alt={accommodation.nome}
+              width={60}
+              height={60}
+              className="rounded-md object-cover"
+            />
+            <span className="mt-1 text-sm font-medium text-center sm:text-left text-gray-800">
+              {accommodation.nome}
+            </span>
+          </div>
+
+          <div className="text-sm text-gray-800 whitespace-pre-line break-words leading-relaxed sm:mt-1">
+            {accommodation.local}
+          </div>
+        </div>
+
+        <div className="flex gap-4 justify-center sm:justify-start p-4 pt-2 flex-wrap">
+          {hasInstagram && instagramUsername && (
+            <Link
+              href={`https://instagram.com/${instagramUsername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-[140px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
+            >
+              <FaInstagram className="text-purple-500 text-xl" />
+              <span className="text-[11px] text-gray-700 mt-1 text-center break-all">
+                @{instagramUsername}
               </span>
-            </div>
+            </Link>
+          )}
 
-            <div className="flex flex-col text-sm text-gray-800 mt-1">
-              <span>{accommodation.local}</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center gap-2">
-            {hasInstagram && instagramUsername && (
-              <Link
-                href={`https://instagram.com/${instagramUsername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-[120px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
-              >
-                <FaInstagram className="text-purple-500 text-xl" />
-                <span className="text-[10px] text-gray-700 mt-1 truncate w-full text-center">
-                  @{instagramUsername}
-                </span>
-              </Link>
-            )}
-
-            {hasWhatsapp && (
-              <Link
-                href={`https://wa.me/${accommodation.whatsapp.replace(/\D/g, "")}?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-[120px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
-              >
-                <FaWhatsapp className="text-green-500 text-xl" />
-                <span className="text-[10px] text-gray-700 mt-1 truncate w-full text-center">
-                  {accommodation.whatsapp}
-                </span>
-              </Link>
-            )}
-          </div>
+          {hasWhatsapp && (
+            <Link
+              href={`https://wa.me/${accommodation.whatsapp.replace(/\D/g, "")}?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-[140px] flex flex-col items-center bg-gray-200 rounded-md px-2 py-1 hover:bg-gray-300"
+            >
+              <FaWhatsapp className="text-green-500 text-xl" />
+              <span className="text-[11px] text-gray-700 mt-1 text-center break-all">
+                {accommodation.whatsapp}
+              </span>
+            </Link>
+          )}
         </div>
 
         <div className="flex flex-wrap gap-2 p-4 justify-center">
