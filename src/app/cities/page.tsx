@@ -1,11 +1,22 @@
+"use client";
+
 import { BackButton } from "@/components/back-button";
+import { ICity } from "@/interfaces/ICity";
+import { IResponse } from "@/interfaces/IResponse";
 import { getAllCities } from "@/services/cities";
+import { useEffect, useState } from "react";
 import City from "./components/city";
 
-export const dynamic = "force-dynamic";
+export default function Page() {
+  const [cities, setCities] = useState<IResponse<ICity[]>>();
 
-export default async function Page() {
-  const cities = await getAllCities();
+  useEffect(() => {
+    (async () => {
+      const request = await getAllCities();
+
+      setCities(request);
+    })();
+  }, []);
 
   return (
     <>
@@ -13,7 +24,7 @@ export default async function Page() {
         <BackButton />
       </div>
 
-      <City initialData={cities} />
+      {cities ? <City initialData={cities} /> : null}
     </>
   );
 }

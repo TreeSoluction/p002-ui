@@ -1,14 +1,24 @@
+"use client";
+
 import { Banner } from "@/components/banner";
 import { CalendarScroll } from "@/components/calendar-scroll";
 import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
+import { ICity } from "@/interfaces/ICity";
 import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
+import { useEffect, useState } from "react";
 
-export const dynamic = "force-dynamic";
+export default function Home() {
+  const [cities, setCities] = useState<ICity[]>([]);
 
-export default async function Home() {
-  const cities = (await getAllCities()).data;
+  useEffect(() => {
+    (async () => {
+      const request = (await getAllCities()).data;
+
+      setCities(request);
+    })();
+  }, []);
 
   return (
     <div className="">
