@@ -16,12 +16,9 @@ export default function City({ initialData }: CityProps) {
   const [page, setPage] = useState(initialData.page ?? 1);
   const size = initialData.size ?? 10;
 
-  const shouldFetch = page !== initialData.page;
-
   const { data, isLoading } = useQuery<IResponse<ICity[]>>({
     queryKey: ["cities", page],
     queryFn: () => getAllCities(size, page),
-    enabled: shouldFetch,
     staleTime: 1000 * 60,
   });
 

@@ -5,6 +5,8 @@ import { FeatureCard } from "@/components/feature-scroll/feature-card";
 import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const cities = (await getAllCities()).data;
 

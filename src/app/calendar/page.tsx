@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { BackButton } from "@/components/back-button";
 import { getCalendarById } from "@/services/calendar";
 
