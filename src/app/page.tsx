@@ -2,23 +2,19 @@
 
 import { Banner } from "@/components/banner";
 import { CalendarScroll } from "@/components/calendar-scroll";
-import { CitiesCarousel } from "@/components/cities-scroll";
 import { FeatureCard } from "@/components/feature-scroll/feature-card";
-import { ICity } from "@/interfaces/ICity";
-import { getAllCities } from "@/services/cities";
 import { features } from "@/utils/features";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [cities, setCities] = useState<ICity[]>([]);
+  // const [cities, setCities] = useState<ICity[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const request = (await getAllCities()).data;
+  // useEffect(() => {
+  //   (async () => {
+  //     const request = (await getAllCities()).data;
 
-      setCities(request);
-    })();
-  }, []);
+  //     setCities(request);
+  //   })();
+  // }, []);
 
   return (
     <div className="">
@@ -26,7 +22,7 @@ export default function Home() {
         <h2 className="text-center text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">
           Selecione uma cidade
         </h2>
-        <CitiesCarousel cities={cities} redirect={true} />
+        {/* <CitiesCarousel cities={cities} redirect={true} /> */}
       </div>
 
       <div className="w-full my-4">
