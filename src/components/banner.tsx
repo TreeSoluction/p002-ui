@@ -1,9 +1,6 @@
-"use client";
-
-import { getAllCarouselImages } from "@/services/carousel";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { getAllCarouselImages } from "../services/carousel";
 
 interface BannerProps {
   autoPlay?: boolean;
@@ -17,18 +14,17 @@ export function Banner({
   className = "",
 }: BannerProps) {
   const [carouselImages, setCarouselImages] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const carouselImages = (await getAllCarouselImages()).data.map(
-        (image) => image.imagem || "/logo.png",
+      const images = (await getAllCarouselImages()).data.map(
+        (image: { imagem: any }) => image.imagem || "/logo.png",
       );
 
-      setCarouselImages(carouselImages);
+      setCarouselImages(images);
     })();
   }, []);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (!autoPlay || carouselImages.length <= 1) return;
@@ -45,22 +41,16 @@ export function Banner({
   };
 
   const variants = {
-    enter: {
-      opacity: 0,
-    },
-    center: {
-      opacity: 1,
-    },
-    exit: {
-      opacity: 0,
-    },
+    enter: { opacity: 0 },
+    center: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   if (carouselImages.length === 0) return null;
 
   return (
     <div className={`relative w-full ${className}`}>
-      <div className="relative w-full aspect-[3/1] sm:aspect-[4/1] md:aspect-[5/2] lg:aspect-[16/5] overflow-hidden rounded-2xl md:rounded-3xl">
+      <div className="relative w-full aspect-3/1 sm:aspect-4/1 md:aspect-5/2 lg:aspect-16/5 overflow-hidden rounded-2xl md:rounded-3xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -74,13 +64,11 @@ export function Banner({
             }}
             className="absolute inset-0"
           >
-            <Image
+            <img
               src={carouselImages[currentIndex]}
               alt={`Anúncio ${currentIndex + 1}`}
-              fill
-              className="object-cover rounded-2xl md:rounded-3xl"
-              priority={currentIndex === 0}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              className="w-full h-full object-cover rounded-2xl md:rounded-3xl"
+              loading={currentIndex === 0 ? "eager" : "lazy"}
             />
           </motion.div>
         </AnimatePresence>

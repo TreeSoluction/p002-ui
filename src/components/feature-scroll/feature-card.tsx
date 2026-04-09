@@ -1,6 +1,5 @@
-import Link from "@/components/link";
-import { FeatureCardProps } from "@/interfaces/IFeatureCard";
-import Image from "next/image";
+import type { FeatureCardProps } from "../../interfaces/IFeatureCard";
+import Link from "../link";
 
 export function FeatureCard({
   icon,
@@ -12,18 +11,12 @@ export function FeatureCard({
 }: FeatureCardProps) {
   return (
     <Link
-      href={url}
+      to={url}
       className={`flex flex-col items-center justify-center px-1 py-2 ${className}`}
       {...rest}
     >
-      <div className="w-10 h-10 sm:w-12 sm:h-12 relative mb-1 shrink-0">
-        <Image
-          src={icon}
-          alt={label}
-          fill
-          className="object-contain"
-          sizes="(max-width: 640px) 40px, 48px"
-        />
+      <div className="w-10 h-10 sm:w-12 sm:h-12 mb-1 shrink-0 relative">
+        <img src={icon} alt={label} className="object-contain w-full h-full" />
       </div>
       <span
         className={`${textSize} font-semibold text-center uppercase text-[#0E2F4B] leading-tight`}

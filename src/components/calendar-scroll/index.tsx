@@ -1,10 +1,8 @@
-"use client";
-
-import { ICalendar } from "@/interfaces/ICalendar";
-import { getAllCalendars } from "@/services/calendar";
 import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import type { ICalendar } from "../../interfaces/ICalendar";
+import { getAllCalendars } from "../../services/calendar";
+import Link from "../link";
 
 export function CalendarScroll() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,7 +22,6 @@ export function CalendarScroll() {
   useEffect(() => {
     (async () => {
       const data = (await getAllCalendars()).data;
-
       setCalendars(data);
     })();
   }, []);
@@ -76,8 +73,8 @@ export function CalendarScroll() {
             className="snap-start shrink-0"
           >
             <Link
-              href={`/calendar?id=${calendar.id}`}
-              className="flex flex-col items-center p-4 w-[140px] sm:w-[160px] rounded-xl bg-white shadow hover:bg-green-100 transition"
+              to={`/calendar?id=${calendar.id}`}
+              className="flex flex-col items-center p-4 w-[140px] sm:w-40 rounded-xl bg-white shadow hover:bg-green-100 transition"
             >
               <CalendarDays className="w-8 h-8 text-green-700 mb-2" />
               <span className="text-center text-sm font-medium text-gray-700">

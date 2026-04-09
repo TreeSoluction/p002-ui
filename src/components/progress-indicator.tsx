@@ -1,15 +1,12 @@
-"use client";
-
-import { usePathname, useSearchParams } from "next/navigation";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 NProgress.configure({ showSpinner: false });
 
 export default function ProgressIndicator() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const location = useLocation();
 
   useEffect(() => {
     NProgress.start();
@@ -18,10 +15,8 @@ export default function ProgressIndicator() {
       NProgress.done();
     }, 300);
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [pathname, searchParams]);
+    return () => clearTimeout(timeout);
+  }, [location.pathname, location.search]);
 
   return null;
 }

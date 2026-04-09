@@ -1,4 +1,4 @@
-import { ISegment } from "./ISegment";
+import type { ISegment } from "./ISegment";
 
 export interface ICity {
   id: number;

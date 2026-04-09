@@ -1,55 +1,59 @@
-"use client";
-
-import Link from "@/components/link";
-import Image from "next/image";
-
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperClass } from "swiper/types";
 
-import { ICity, IStateCardProps } from "@/interfaces/ICity";
-import { getAllCities } from "@/services/cities";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
+import type { ICity, IStateCardProps } from "../interfaces/ICity";
+import { getAllCities } from "../services/cities";
+import Link from "./link";
 
 export function Carousel({ initialCityName }: { initialCityName?: string }) {
   const [cities, setCities] = useState<ICity[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
   const swiperRef = useRef<SwiperClass | null>(null);
-  const slidesCount = cities.length;
 
   useEffect(() => {
-    (async () => {
+    const loadCities = async () => {
       const response = await getAllCities();
+
       if (!response.data) {
         throw new Error("Failed to fetch cities");
       }
+
       setCities(response.data);
-    })();
-  }, [initialCityName]);
+    };
+
+    loadCities();
+  }, []);
 
   useEffect(() => {
-    if (initialCityName) {
-      const index = cities.findIndex(
-        (c) => c.nome.toLowerCase() === initialCityName.toLowerCase(),
-      );
+    if (!initialCityName || cities.length === 0) return;
 
-      if (index >= 0) {
-        setActiveIndex(index);
-        swiperRef.current?.slideToLoop(index, 500);
-      }
+    const index = cities.findIndex(
+      (c) => c.nome.toLowerCase() === initialCityName.toLowerCase(),
+    );
+
+    if (index >= 0) {
+      swiperRef.current?.slideToLoop(index, 500);
     }
   }, [cities, initialCityName]);
 
   const getSlideClass = (index: number) => {
+    const slidesCount = cities.length;
+
     if (index === activeIndex) return "scale-105 opacity-100";
+
     if (
       index === (activeIndex + 1) % slidesCount ||
       index === (activeIndex - 1 + slidesCount) % slidesCount
-    )
+    ) {
       return "scale-90 opacity-80";
+    }
+
     return "scale-75 opacity-50";
   };
 
@@ -66,6 +70,7 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
+
         <button
           className="custom-next w-10 h-10 absolute -right-6 top-1/2 -translate-y-1/2 z-10 rounded-full flex items-center justify-center cursor-pointer"
           aria-label="Next"
@@ -92,22 +97,21 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
             1280: { slidesPerView: 3 },
           }}
         >
-          {cities.map((city) => {
-            const realIndex = cities.findIndex((c) => c.nome === city.nome);
-            const isActive = realIndex === activeIndex;
+          {cities.map((city, index) => {
+            const isActive = index === activeIndex;
 
             const content = (
               <div className="flex flex-col items-center justify-center text-center">
                 <div className="relative w-full h-40 rounded-3xl overflow-hidden shadow-lg bg-white p-2">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                    <Image
+                    <img
                       src={city.imagem || "/logo.png"}
                       alt={city.nome}
-                      fill
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
+
                 <span
                   className={`mt-3 text-lg font-semibold ${
                     isActive ? "text-black" : "text-gray-400"
@@ -120,11 +124,13 @@ export function Carousel({ initialCityName }: { initialCityName?: string }) {
 
             return (
               <SwiperSlide
-                key={city.nome}
-                className={`transition-all duration-300 ease-in-out ${getSlideClass(realIndex)}`}
+                key={city.id}
+                className={`transition-all duration-300 ease-in-out ${getSlideClass(
+                  index,
+                )}`}
               >
                 {isActive ? (
-                  <Link href={`/city?id=${city.id}`}>{content}</Link>
+                  <Link to={`/city?id=${city.id}`}>{content}</Link>
                 ) : (
                   <div aria-hidden>{content}</div>
                 )}

@@ -1,39 +1,22 @@
-"use client";
-
-import NextLink from "next/link";
 import NProgress from "nprogress";
-import { ComponentProps, MouseEvent, forwardRef } from "react";
-
-type LinkProps = ComponentProps<typeof NextLink>;
+import { type MouseEvent, forwardRef } from "react";
+import { type LinkProps, Link as RouterLink } from "react-router-dom";
 
 const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
-  const { onClick, href, ...rest } = props;
+  const { onClick, to, ...rest } = props;
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (typeof window === "undefined") return;
 
-    const pathname = window.location.pathname;
-    const searchParams = window.location.search;
+    const currentFullPath = window.location.pathname + window.location.search;
 
-    const currentFullPath = `${pathname}${searchParams}`;
+    let targetHref = "";
 
-    let targetHref: string;
-
-    if (typeof href === "string") {
-      targetHref = href;
-    } else if (typeof href === "object") {
-      const query = href.query
-        ? "?" +
-          Object.entries(href.query)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("&")
-        : "";
-
-      targetHref = `${href.pathname ?? ""}${query}`;
-    } else {
-      targetHref = "";
+    if (typeof to === "string") {
+      targetHref = to;
+    } else if (typeof to === "object") {
+      const query = to.search ?? "";
+      targetHref = `${to.pathname ?? ""}${query}`;
     }
 
     if (targetHref === currentFullPath) return;
@@ -42,7 +25,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
     onClick?.(e);
   };
 
-  return <NextLink {...rest} href={href} onClick={handleClick} ref={ref} />;
+  return <RouterLink {...rest} to={to} onClick={handleClick} ref={ref} />;
 });
 
 Link.displayName = "Link";

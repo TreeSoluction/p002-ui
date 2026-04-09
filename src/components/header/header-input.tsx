@@ -1,10 +1,9 @@
-"use client";
-
-import { getAllStores } from "@/services/store";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { IStore } from "../../interfaces/IStore";
+import { getAllStores } from "../../services/store";
+import Link from "../link";
 
 export default function HeaderInput() {
   const [value, setValue] = useState("");
@@ -60,13 +59,13 @@ export default function HeaderInput() {
 
       {data && data.data.length > 0 && (
         <ul className="absolute z-10 left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded shadow">
-          {data.data.map((store) => (
+          {data.data.map((store: IStore) => (
             <li
               key={store.id}
               className="border-b border-gray-200 last:border-b-0"
             >
               <Link
-                href={`/store/${encodeURIComponent(store.nome)}?id=${store.id}`}
+                to={`/store/${encodeURIComponent(store.nome)}?id=${store.id}`}
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 {store.nome}

@@ -1,7 +1,5 @@
-"use client";
-import { ICity } from "@/interfaces/ICity";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import type { ICity } from "../../interfaces/ICity";
 
 interface CityCardProps {
   city: ICity;
@@ -23,13 +21,10 @@ export function CityCard({ city, size }: CityCardProps) {
           isLarge ? "w-[110px] h-[110px]" : "w-[70px] h-[70px]"
         }`}
       >
-        <Image
+        <img
           src={city.imagem || "/logo.png"}
           alt={city.nome}
-          fill
-          className="object-cover"
-          sizes={isLarge ? "110px" : "70px"}
-          priority={isLarge}
+          className="object-cover w-full h-full"
         />
       </div>
       <p

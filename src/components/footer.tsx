@@ -1,7 +1,4 @@
-"use client";
 import { ArrowUp, Copyright, MailIcon } from "lucide-react";
-import Image from "next/image";
-import LinkNext from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "./link";
 
@@ -11,44 +8,45 @@ export function Footer() {
       <div className="max-w-6xl mx-auto grid gap-10 grid-cols-1 md:grid-cols-3">
         <div>
           <h3 className="font-bold mb-3 text-base sm:text-lg">Navegação</h3>
+
           <ul className="space-y-1 text-sm sm:text-base">
             <li>
-              <Link href="/" className="hover:underline">
+              <Link to="/" className="hover:underline">
                 Início
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:underline">
+              <Link to="/about" className="hover:underline">
                 Sobre nós
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:underline">
+              <Link to="/contact" className="hover:underline">
                 Contato
               </Link>
             </li>
             <li>
-              <Link href="/cities" className="hover:underline">
+              <Link to="/cities" className="hover:underline">
                 Cidades
               </Link>
             </li>
             <li>
-              <Link href="/sac" className="hover:underline">
+              <Link to="/sac" className="hover:underline">
                 SAC
               </Link>
             </li>
             <li>
-              <Link href="/terms-of-use" className="hover:underline">
+              <Link to="/terms-of-use" className="hover:underline">
                 Termos de Uso
               </Link>
             </li>
             <li>
-              <Link href="/faq" className="hover:underline">
+              <Link to="/faq" className="hover:underline">
                 FAQ - Perguntas Frequentes
               </Link>
             </li>
             <li>
-              <Link href="/policy-and-privacy" className="hover:underline">
+              <Link to="/policy-and-privacy" className="hover:underline">
                 Política de Privacidade
               </Link>
             </li>
@@ -57,32 +55,35 @@ export function Footer() {
 
         <div>
           <h3 className="font-bold mb-3 text-base sm:text-lg">Contato</h3>
+
           <p className="text-sm sm:text-base flex items-center gap-2">
             <FaWhatsapp className="text-green-600 w-5 h-5" />
-            <a
-              href="https://wa.me/5581991002040?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações."
+
+            <Link
+              to="https://wa.me/5581991002040?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações."
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
             >
               (81) 99100-2040
-            </a>
+            </Link>
           </p>
-          <p className="text-sm sm:text-base flex items-center gap-2 break-words whitespace-normal mt-2">
+
+          <p className="text-sm sm:text-base flex items-center gap-2 wrap-break-word whitespace-normal mt-2">
             <MailIcon className="text-white w-5 h-5" />
-            <a
-              href="mailto:contatofeirasdepernambuco@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
+
+            <Link
+              to="mailto:contatofeirasdepernambuco@gmail.com"
               className="hover:underline"
             >
               contatofeirasdepernambuco@gmail.com
-            </a>
+            </Link>
           </p>
         </div>
 
         <div>
           <h3 className="font-bold mb-3 text-base sm:text-lg">Baixe o App</h3>
+
           <p className="mb-4 text-sm sm:text-base">
             Baixe o aplicativo e tenha
             <br />
@@ -90,47 +91,43 @@ export function Footer() {
             <br />
             de Pernambuco na palma da sua mão!
           </p>
+
           <div className="flex flex-wrap gap-2 justify-start items-center">
-            <LinkNext
-              href="https://play.google.com/store/apps/details?id=com.feirasdepernambuco&pcampaignid=web_share"
-              className="shrink-0"
+            <Link
+              to="https://play.google.com/store/apps/details?id=com.feirasdepernambuco&pcampaignid=web_share"
               target="_blank"
+              rel="noopener noreferrer"
             >
-              <div className="relative w-[130px] h-10">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                  alt="Disponível no Google Play"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </LinkNext>
-            <LinkNext
-              href="https://apps.apple.com/br/app/feiras-de-pernambuco/id6748486143"
-              className="shrink-0"
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                alt="Disponível no Google Play"
+                className="w-[130px] h-10 object-contain"
+              />
+            </Link>
+
+            <Link
+              to="https://apps.apple.com/br/app/feiras-de-pernambuco/id6748486143"
               target="_blank"
+              rel="noopener noreferrer"
             >
-              <div className="relative w-[130px] h-10">
-                <Image
-                  src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                  alt="Disponível na App Store"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </LinkNext>
+              <img
+                src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                alt="Disponível na App Store"
+                className="w-[130px] h-10 object-contain"
+              />
+            </Link>
           </div>
         </div>
       </div>
 
       <div className="flex justify-center mt-10">
-        <a
+        <button
           className="text-white hover:text-gray-300 transition-colors"
           aria-label="Voltar ao topo"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <ArrowUp className="w-6 h-6 animate-bounce" />
-        </a>
+        </button>
       </div>
 
       <div className="text-center text-sm mt-6 border-t border-white/30 pt-4">
@@ -138,6 +135,7 @@ export function Footer() {
           <Copyright className="w-4 h-4" />
           2025 Feiras de Pernambuco | Todos os direitos reservados
         </p>
+
         <p>Desenvolvido por Soluction Tree</p>
       </div>
     </footer>

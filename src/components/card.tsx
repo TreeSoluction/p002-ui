@@ -1,6 +1,5 @@
-import Link from "@/components/link";
-import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
+import Link from "./link";
 
 interface IFreetterCardProps {
   data: {
@@ -16,12 +15,12 @@ interface IFreetterCardProps {
 export function Card({ data }: IFreetterCardProps) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-xl p-4 gap-4 w-full max-w-4xl shadow-sm">
-      <div className="w-24 h-24 min-w-[96px] relative rounded-xl overflow-hidden bg-white">
-        <Image
+      <div className="w-24 h-24 min-w-24 rounded-xl overflow-hidden bg-white flex items-center justify-center">
+        <img
           src={data.imagem || "/logo.png"}
           alt={data.nome}
-          fill
-          className="object-contain"
+          className="w-full h-full object-contain"
+          loading="lazy"
         />
       </div>
 
@@ -35,7 +34,7 @@ export function Card({ data }: IFreetterCardProps) {
         {data.phone_numbers.map((phone, i) => (
           <Link
             key={i}
-            href={`https://wa.me/55${phone.replace(/\D/g, "")}?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações.`}
+            to={`https://wa.me/55${phone.replace(/\D/g, "")}?text=Olá%2C%20vim%20do%20Feiras%20de%20Pernambuco%2C%20gostaria%20de%20mais%20informações.`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-green-100 hover:bg-green-200 text-green-800 px-3 py-2 rounded text-sm"

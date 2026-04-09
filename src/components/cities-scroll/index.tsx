@@ -1,10 +1,7 @@
-"use client";
-
-import { ICity } from "@/interfaces/ICity";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { ICity } from "../../interfaces/ICity";
 import Link from "../link";
 
 interface CitiesCarouselProps {
@@ -31,7 +28,7 @@ export function CitiesCarousel({
         (city) => city.id === defaultCity.id,
       );
       if (defaultIndex !== -1) {
-        setActiveIndex(defaultIndex);
+        setTimeout(() => setActiveIndex(defaultIndex), 0);
       }
     }
   }, [defaultCity, cities]);
@@ -42,7 +39,7 @@ export function CitiesCarousel({
         (c) => c.id.toString() === selectedCityId,
       );
       if (selectedIndex !== -1 && selectedIndex !== activeIndex) {
-        setActiveIndex(selectedIndex);
+        setTimeout(() => setActiveIndex(selectedIndex), 0);
       }
     }
   }, [selectedCityId, cities, activeIndex]);
@@ -85,11 +82,7 @@ export function CitiesCarousel({
     }),
   };
 
-  const renderSideCity = (
-    city: ICity,
-    position: "left" | "right",
-    key: string,
-  ) => (
+  const renderSideCity = (city: ICity, key: string) => (
     <motion.div
       key={key + city.id}
       initial={{ opacity: 0.4, scale: 0.7 }}
@@ -98,12 +91,11 @@ export function CitiesCarousel({
       transition={{ duration: 0.05, ease: "easeInOut" }}
       className="flex flex-col items-center gap-2"
     >
-      <div className="relative w-[70px] h-[70px] md:w-[120px] md:h-[120px] rounded-xl overflow-hidden grayscale">
-        <Image
+      <div className="w-[70px] h-[70px] md:w-[120px] md:h-[120px] rounded-xl overflow-hidden grayscale">
+        <img
           src={city.imagem || "/logo.png"}
           alt={city.nome}
-          fill
-          className="object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
       <p className="text-xs md:text-sm text-gray-500 truncate">{city.nome}</p>
@@ -123,7 +115,7 @@ export function CitiesCarousel({
       </button>
 
       <div className="flex items-center justify-center gap-6 md:gap-12 w-[340px] md:w-[600px] overflow-hidden">
-        {renderSideCity(getCity(-1), "left", "left")}
+        {renderSideCity(getCity(-1), "left")}
 
         <div className="w-[100px] h-[100px] md:w-[180px] md:h-[180px] relative">
           <AnimatePresence mode="wait" custom={direction}>
@@ -139,15 +131,14 @@ export function CitiesCarousel({
             >
               {redirect ? (
                 <Link
-                  href={`/segment?cityId=${getCity(0).id}`}
+                  to={`/segment?cityId=${getCity(0).id}`}
                   className="flex flex-col items-center gap-2 md:gap-4 h-full hover:scale-105 transition-transform duration-200"
                 >
-                  <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
-                    <Image
+                  <div className="w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
+                    <img
                       src={getCity(0).imagem || "/logo.png"}
                       alt={getCity(0).nome}
-                      fill
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                     />
                   </div>
                   <p className="text-sm md:text-lg font-semibold text-gray-800 truncate hover:text-green-bg transition-colors">
@@ -156,12 +147,11 @@ export function CitiesCarousel({
                 </Link>
               ) : (
                 <div className="flex flex-col items-center gap-2 md:gap-4 h-full hover:scale-105 transition-transform duration-200">
-                  <div className="relative w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
-                    <Image
+                  <div className="w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-xl overflow-hidden shadow-md">
+                    <img
                       src={getCity(0).imagem || "/logo.png"}
                       alt={getCity(0).nome}
-                      fill
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                     />
                   </div>
                   <p className="text-sm md:text-lg font-semibold text-gray-800 truncate hover:text-green-bg transition-colors">
@@ -173,7 +163,7 @@ export function CitiesCarousel({
           </AnimatePresence>
         </div>
 
-        {renderSideCity(getCity(1), "right", "right")}
+        {renderSideCity(getCity(1), "right")}
       </div>
 
       <button

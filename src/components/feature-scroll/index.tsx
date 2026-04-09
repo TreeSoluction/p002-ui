@@ -1,9 +1,7 @@
-"use client";
-
-import { FeatureCard } from "@/components/feature-scroll/feature-card";
-import { features } from "@/utils/features";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { features } from "../../utils/features";
+import { FeatureCard } from "./feature-card";
 
 interface FeaturesScrollProps {
   cityId?: string;
@@ -12,38 +10,38 @@ interface FeaturesScrollProps {
 export function FeaturesScroll({ cityId }: FeaturesScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [scrollAmount, setScrollAmount] = useState(0);
 
-  const updateArrows = () => {
+  const updateArrows = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
     setCanScrollLeft(el.scrollLeft > 0);
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
-  };
-
-  useEffect(() => {
-    const el = containerRef.current;
-    const cardEl = cardRef.current;
-
-    if (el && cardEl) {
-      const cardStyle = getComputedStyle(cardEl);
-      const cardWidth = cardEl.offsetWidth;
-      const gap = parseInt(cardStyle.marginRight) || 0;
-
-      setScrollAmount((cardWidth + gap) * 4);
-    }
   }, []);
 
   useEffect(() => {
-    updateArrows();
+    const el = cardRef.current;
+    if (!el) return;
+
+    const cardStyle = getComputedStyle(el);
+    const cardWidth = el.offsetWidth;
+    const gap = parseInt(cardStyle.marginRight) || 0;
+
+    setScrollAmount((cardWidth + gap) * 4);
+  }, []);
+
+  useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
+    updateArrows();
+
     el.addEventListener("scroll", updateArrows);
     return () => el.removeEventListener("scroll", updateArrows);
-  }, []);
+  }, [updateArrows]);
 
   const scrollByAmountFunc = (distance: number) => {
     const el = containerRef.current;

@@ -1,24 +1,18 @@
-"use client";
-
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
 import NProgress from "nprogress";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function BackButton() {
-  const [canGoBack, setCanGoBack] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setCanGoBack(window.history.length > 1);
-  }, []);
+  const canGoBack = window.history.length > 1;
 
   const handleBack = () => {
     if (canGoBack) {
       window.history.back();
     } else {
       NProgress.start();
-      router.push("/");
+      navigate("/");
     }
   };
 
