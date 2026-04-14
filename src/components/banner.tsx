@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { ICarousel } from "../interfaces/ICarousel";
 import { getAllCarouselImages } from "../services/carousel";
 
 interface BannerProps {
@@ -13,16 +14,13 @@ export function Banner({
   autoPlayInterval = 5000,
   className = "",
 }: BannerProps) {
-  const [carouselImages, setCarouselImages] = useState<string[]>([]);
+  const [carouselImages, setCarouselImages] = useState<ICarousel[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const images = (await getAllCarouselImages()).data.map(
-        (image: { imagem: any }) => image.imagem || "/logo.png",
-      );
-
-      setCarouselImages(images);
+      const response = await getAllCarouselImages();
+      setCarouselImages(response.data);
     })();
   }, []);
 
@@ -64,12 +62,28 @@ export function Banner({
             }}
             className="absolute inset-0"
           >
-            <img
-              src={carouselImages[currentIndex]}
-              alt={`Anúncio ${currentIndex + 1}`}
-              className="w-full h-full object-cover rounded-2xl md:rounded-3xl"
-              loading={currentIndex === 0 ? "eager" : "lazy"}
-            />
+            {carouselImages[currentIndex].link ? (
+              <a
+                href={carouselImages[currentIndex].link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full h-full"
+              >
+                <img
+                  src={carouselImages[currentIndex].imagem || "/logo.png"}
+                  alt={`Anúncio ${currentIndex + 1}`}
+                  className="w-full h-full object-cover rounded-2xl md:rounded-3xl cursor-pointer hover:opacity-95 transition-opacity"
+                  loading={currentIndex === 0 ? "eager" : "lazy"}
+                />
+              </a>
+            ) : (
+              <img
+                src={carouselImages[currentIndex].imagem || "/logo.png"}
+                alt={`Anúncio ${currentIndex + 1}`}
+                className="w-full h-full object-cover rounded-2xl md:rounded-3xl"
+                loading={currentIndex === 0 ? "eager" : "lazy"}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
